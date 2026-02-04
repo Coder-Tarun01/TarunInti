@@ -66,45 +66,66 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.15 }}
               viewport={{ once: true }}
-              className="group relative glass rounded-2xl overflow-hidden glow-effect"
+              className="group relative glass rounded-2xl overflow-hidden cursor-pointer"
             >
-              {/* Gradient background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-50 group-hover:opacity-70 transition-opacity duration-300`} />
+              {/* Base gradient background */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-50`} />
               
-              <div className="relative p-6 md:p-8">
-                {/* Header */}
+              {/* Default content - visible by default */}
+              <div className="relative p-6 md:p-8 transition-all duration-500 group-hover:opacity-0 group-hover:scale-95">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <span className="text-primary text-sm font-medium">{project.role}</span>
-                    <h3 className="font-display text-xl md:text-2xl font-bold text-foreground mt-1 group-hover:text-primary transition-colors">
+                    <h3 className="font-display text-xl md:text-2xl font-bold text-foreground mt-1">
                       {project.title}
                     </h3>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all">
-                    <ArrowUpRight className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <ArrowUpRight className="w-5 h-5 text-primary" />
+                  </div>
+                </div>
+                <p className="text-muted-foreground leading-relaxed line-clamp-2">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Hover overlay - full details */}
+              <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-primary/20 p-6 md:p-8 flex flex-col justify-between opacity-0 scale-105 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500">
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <span className="text-primary text-sm font-semibold uppercase tracking-wider">{project.role}</span>
+                  </div>
+                  <h3 className="font-display text-xl md:text-2xl font-bold text-foreground mb-3">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                    {project.description}
+                  </p>
+                  <p className="text-primary text-sm font-medium flex items-center gap-2">
+                    <span className="text-lg">✨</span> {project.impact}
+                  </p>
+                </div>
+
+                {/* Tech Stack with staggered animation */}
+                <div className="space-y-3">
+                  <span className="text-xs text-muted-foreground uppercase tracking-wider">Tech Stack</span>
+                  <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((tech, techIndex) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1.5 rounded-full text-xs font-semibold bg-primary/20 text-primary border border-primary/30 transform transition-all duration-300"
+                        style={{ transitionDelay: `${techIndex * 50}ms` }}
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Description */}
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Impact */}
-                <p className="text-foreground/80 text-sm font-medium mb-4 italic">
-                  "✨ {project.impact}"
-                </p>
-
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                {/* View project indicator */}
+                <div className="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-primary flex items-center justify-center transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-200">
+                  <ArrowUpRight className="w-5 h-5 text-primary-foreground" />
                 </div>
               </div>
             </motion.div>
