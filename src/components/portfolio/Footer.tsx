@@ -15,11 +15,11 @@ const Footer = () => {
           className="flex flex-col md:flex-row items-center justify-between gap-4"
         >
           <div className="font-display text-lg font-bold text-gradient">
-            &lt;YourName /&gt;
+            INTI TARUN SAI KUMAR
           </div>
-          
+
           <p className="text-muted-foreground text-sm flex items-center gap-1">
-            © {currentYear} • Made with <Heart className="w-4 h-4 text-primary fill-primary" /> and lots of code
+            © {currentYear} • All Rights Reserved
           </p>
 
           <div className="flex items-center gap-6">

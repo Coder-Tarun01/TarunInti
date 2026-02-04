@@ -2,8 +2,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MessageSquare, Send, Linkedin, Github, Twitter, CheckCircle2, Sparkles } from "lucide-react";
+import { Mail, Send, Linkedin, Github, CheckCircle2, Sparkles, Phone } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+
+const WhatsAppIcon = (props: React.ComponentProps<'svg'>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    stroke="none"
+    {...props}
+  >
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.151-.174.2-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.2 0-.523.074-.797.372-.271.297-1.047 1.021-1.047 2.48 0 1.461 1.06 2.875 1.21 3.074.15.198 2.081 3.199 5.065 4.488.705.305 1.256.488 1.688.624.71.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.416-.074-.129-.272-.206-.572-.356z" />
+    <path d="M11.944 0C5.347 0 0 5.373 0 12c0 2.213.619 4.286 1.706 6.069l-1.082 3.923 4.098-1.066A11.954 11.954 0 0 0 11.944 24c6.597 0 11.944-5.373 11.944-12S18.541 0 11.944 0zM12 21.821a9.8 9.8 0 0 1-4.991-1.378l-.358-.213-2.219.578.59-2.148-.231-.368A9.776 9.776 0 0 1 2.181 12c0-5.414 4.404-9.819 9.819-9.819 5.415 0 9.819 4.404 9.819 9.819 0 5.414-4.404 9.821-9.819 9.821z" />
+  </svg>
+);
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -17,18 +30,33 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
-    
-    // Reset after 4 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 4000);
+
+    try {
+      const response = await fetch("https://formspree.io/f/mrelnnlg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        setFormData({ name: "", email: "", message: "" });
+
+        // Reset after 4 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 4000);
+      } else {
+        setIsSubmitting(false);
+        toast.error("Something went wrong. Please try again later.");
+      }
+    } catch (error) {
+      setIsSubmitting(false);
+      toast.error("Failed to send message. Please verify your connection.");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -50,7 +78,7 @@ const Contact = () => {
             Let's Build Something <span className="text-gradient">Amazing</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Ready to transform your ideas into reality? Drop me a message and let's discuss 
+            Ready to transform your ideas into reality? Drop me a message and let's discuss
             how I can help bring your project to life.
           </p>
         </motion.div>
@@ -103,7 +131,7 @@ const Contact = () => {
                       <motion.div
                         key={i}
                         initial={{ scale: 0, opacity: 0 }}
-                        animate={{ 
+                        animate={{
                           scale: [0, 1, 0],
                           opacity: [0, 1, 0],
                           x: [0, (i % 2 === 0 ? 1 : -1) * (30 + i * 10)],
@@ -246,9 +274,9 @@ const Contact = () => {
             className="space-y-8"
           >
             {/* Quick contact cards */}
-            <div className="glass rounded-2xl p-6 glow-effect">
+            <div className="glass rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 group">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Mail className="w-6 h-6 text-primary" />
                 </div>
                 <div>
@@ -257,26 +285,29 @@ const Contact = () => {
                 </div>
               </div>
               <a
-                href="mailto:hello@yourname.dev"
+                href="mailto:tarunsaikumarinti3@gmail.com"
                 className="text-primary hover:underline font-medium"
               >
-                hello@yourname.dev
+                tarunsaikumarinti3@gmail.com
               </a>
             </div>
 
-            <div className="glass rounded-2xl p-6 glow-effect">
+            <div className="glass rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 group">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <MessageSquare className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Phone className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-foreground">Response Time</h3>
-                  <p className="text-muted-foreground text-sm">I reply fast!</p>
+                  <h3 className="font-display font-bold text-foreground">Phone</h3>
+                  <p className="text-muted-foreground text-sm">Call or WhatsApp</p>
                 </div>
               </div>
-              <p className="text-foreground font-medium">
-                Usually within <span className="text-gradient">24 hours</span>
-              </p>
+              <a
+                href="tel:+919848151735"
+                className="text-primary hover:underline font-medium"
+              >
+                +91 9848151735
+              </a>
             </div>
 
             {/* Social Links */}
@@ -284,14 +315,16 @@ const Contact = () => {
               <h3 className="font-display font-bold text-foreground mb-4">Connect With Me</h3>
               <div className="flex gap-4">
                 {[
-                  { icon: Linkedin, href: "#", label: "LinkedIn" },
-                  { icon: Github, href: "#", label: "GitHub" },
-                  { icon: Twitter, href: "#", label: "Twitter" },
+                  { icon: Linkedin, href: "https://www.linkedin.com/in/tarun-inti-/", label: "LinkedIn" },
+                  { icon: Github, href: "https://github.com/Coder-Tarun01", label: "GitHub" },
+                  { icon: WhatsAppIcon, href: "https://wa.me/919848151735", label: "WhatsApp" },
                 ].map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
                     aria-label={social.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110"
                   >
                     <social.icon className="w-5 h-5" />

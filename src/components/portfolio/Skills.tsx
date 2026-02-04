@@ -1,4 +1,4 @@
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 
 const skillCategories = [
@@ -38,16 +38,10 @@ interface SkillCardProps {
 }
 
 const SkillCard = ({ category, categoryIndex }: SkillCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
     setAnimationKey(prev => prev + 1);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
   };
 
   return (
@@ -58,7 +52,6 @@ const SkillCard = ({ category, categoryIndex }: SkillCardProps) => {
       viewport={{ once: true }}
       className="glass rounded-2xl p-6 transition-all duration-300 hover:border-primary/50"
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <h3 className="font-display text-xl font-bold text-foreground mb-6 flex items-center gap-2">
         <span className="w-2 h-2 rounded-full bg-primary" />
@@ -82,9 +75,9 @@ const SkillCard = ({ category, categoryIndex }: SkillCardProps) => {
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${skill.level}%` }}
-                transition={{ 
-                  duration: 1, 
-                  delay: skillIndex * 0.1, 
+                transition={{
+                  duration: 1,
+                  delay: skillIndex * 0.1,
                   ease: [0.25, 0.46, 0.45, 0.94]
                 }}
                 className="h-full rounded-full relative overflow-hidden"
@@ -126,7 +119,7 @@ const Skills = () => {
             Technologies I <span className="text-gradient">Master</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A comprehensive toolkit that enables me to build anything from stunning landing pages 
+            A comprehensive toolkit that enables me to build anything from stunning landing pages
             to complex full-stack applications.
           </p>
         </motion.div>
@@ -136,22 +129,6 @@ const Skills = () => {
             <SkillCard key={category.title} category={category} categoryIndex={categoryIndex} />
           ))}
         </div>
-
-        {/* Fun AI badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          viewport={{ once: true }}
-          className="mt-12 text-center"
-        >
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-primary/30 bg-primary/5">
-            <span className="text-2xl">🤖</span>
-            <span className="text-foreground font-medium">
-              Plus, I leverage AI to handle <span className="text-gradient font-bold">anything</span> else!
-            </span>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

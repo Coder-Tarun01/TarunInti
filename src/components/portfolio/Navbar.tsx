@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Code2 } from "lucide-react";
 
 const navLinks = [
   { name: "About", href: "#about" },
@@ -27,14 +27,17 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "glass py-3" : "py-5"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "glass py-3" : "py-5"
+        }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="font-display text-xl font-bold text-gradient">
-          &lt;YourName /&gt;
+        {/* Logo */}
+        <a href="#" className="flex items-center gap-2 font-display text-xl font-bold text-gradient group">
+          <div className="bg-primary/10 p-2 rounded-lg group-hover:bg-primary/20 transition-colors">
+            <Code2 className="w-6 h-6 text-primary" />
+          </div>
+          INTI TARUN SAI KUMAR
         </a>
 
         {/* Desktop Navigation */}
@@ -69,23 +72,23 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
+            animate={{ opacity: 1, height: "100vh" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden glass border-t border-border"
+            className="md:hidden fixed inset-x-0 top-[70px] bottom-0 bg-background/95 backdrop-blur-xl border-t border-border z-40 overflow-y-auto"
           >
-            <div className="px-6 py-6 space-y-4">
+            <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-8 p-6">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block text-foreground font-medium py-2 hover:text-primary transition-colors"
+                  className="text-2xl font-display font-bold text-foreground hover:text-primary transition-colors"
                 >
                   {link.name}
                 </a>
               ))}
-              <Button variant="hero" size="lg" className="w-full" asChild>
+              <Button variant="hero" size="xl" className="w-full max-w-xs mt-8" asChild>
                 <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
                   Hire Me
                 </a>

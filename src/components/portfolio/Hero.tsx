@@ -8,7 +8,7 @@ const ProfessionalSymbol = () => {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.8, delay: 0.1 }}
-      className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
+      className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96"
     >
       {/* Outer rotating ring */}
       <motion.div
@@ -56,7 +56,7 @@ const ProfessionalSymbol = () => {
         <div className="relative">
           {/* Glowing backdrop */}
           <motion.div
-            animate={{ 
+            animate={{
               boxShadow: [
                 "0 0 40px hsl(175 80% 50% / 0.3)",
                 "0 0 80px hsl(175 80% 50% / 0.5)",
@@ -76,7 +76,7 @@ const ProfessionalSymbol = () => {
               >
                 <span className="text-3xl md:text-4xl font-bold text-primary font-display">&lt;</span>
               </motion.div>
-              
+
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -84,7 +84,7 @@ const ProfessionalSymbol = () => {
               >
                 <Code2 className="w-10 h-10 md:w-14 md:h-14 text-primary" strokeWidth={1.5} />
               </motion.div>
-              
+
               <motion.div
                 initial={{ x: -10, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -151,7 +151,7 @@ const ProfessionalSymbol = () => {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden section-padding">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden section-padding pt-24 md:pt-20">
       {/* Background glow effects */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-glow" />
@@ -169,7 +169,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-6"
+              className="mb-4"
             >
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium">
                 <Sparkles className="w-4 h-4" />
@@ -181,20 +181,20 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+              className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4"
             >
-              <span className="text-foreground">Building Bold &</span>
+              <span className="text-foreground">CRAFTING VIBRANT &</span>
               <br />
-              <span className="text-gradient">Interactive Web Experiences</span>
+              <span className="text-gradient">NEXT-GEN WEB EXPERIENCES</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-10 text-balance"
+              className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-8 text-balance"
             >
-              Full-Stack Developer crafting high-performance websites and applications 
+              Full-Stack Developer crafting high-performance websites and applications
               that convert visitors into loyal customers. Let's build something extraordinary.
             </motion.p>
 
@@ -221,7 +221,7 @@ const Hero = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex-shrink-0 order-first lg:order-last"
+            className="flex-shrink-0"
           >
             <ProfessionalSymbol />
           </motion.div>
