@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const projects = [
@@ -10,6 +10,7 @@ const projects = [
     techStack: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
     impact: "Streamlined job application process with intuitive UI/UX",
     gradient: "from-cyan-500/20 to-blue-500/20",
+    link: "https://mycareerbuild.com/",
   },
   {
     title: "VFNCC Cultural Platform",
@@ -18,6 +19,16 @@ const projects = [
     techStack: ["React", "CSS3", "JavaScript", "Responsive Design"],
     impact: "Increased community engagement through modern web presence",
     gradient: "from-purple-500/20 to-pink-500/20",
+    link: "https://vfncc.org/",
+  },
+  {
+    title: "Techliv – IoT & Smart Homes",
+    description: "A static website for Smart Home & Industrial IoT solutions, showcasing products and services for connected living.",
+    role: "Frontend Developer",
+    techStack: ["HTML", "CSS", "JavaScript", "Responsive Design"],
+    impact: "Clean, informative presence for IoT and smart home solutions",
+    gradient: "from-amber-500/20 to-orange-500/20",
+    link: "https://techliv.net/",
   },
   {
     title: "Logistics Management System",
@@ -59,14 +70,21 @@ const Projects = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {projects.map((project, index) => (
-            <motion.div
+          {projects.map((project, index) => {
+            const CardWrapper = "link" in project && project.link ? motion.a : motion.div;
+            const wrapperProps =
+              "link" in project && project.link
+                ? { href: project.link, target: "_blank", rel: "noopener noreferrer" }
+                : {};
+            return (
+            <CardWrapper
               key={project.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.15 }}
               viewport={{ once: true }}
-              className="group relative glass rounded-2xl overflow-hidden cursor-pointer"
+              className="group relative glass rounded-2xl overflow-hidden cursor-pointer block"
+              {...wrapperProps}
             >
               {/* Base gradient background */}
               <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-50`} />
@@ -128,8 +146,9 @@ const Projects = () => {
                   <ArrowUpRight className="w-5 h-5 text-primary-foreground" />
                 </div>
               </div>
-            </motion.div>
-          ))}
+            </CardWrapper>
+          );
+          })}
         </div>
 
         {/* CTA */}
