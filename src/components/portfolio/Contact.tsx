@@ -2,9 +2,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Send, Linkedin, Github, CheckCircle2, Sparkles, Phone } from "lucide-react";
+import { Mail, Send, Linkedin, Github, Phone } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { EnvelopeAnimation } from "@/components/ui/envelope-animation";
+
 
 const WhatsAppIcon = (props: React.ComponentProps<'svg'>) => (
   <svg
@@ -45,10 +47,10 @@ const Contact = () => {
         setIsSubmitted(true);
         setFormData({ name: "", email: "", message: "" });
 
-        // Reset after 4 seconds
+        // Reset after 6 seconds
         setTimeout(() => {
           setIsSubmitted(false);
-        }, 4000);
+        }, 6000);
       } else {
         setIsSubmitting(false);
         toast.error("Something went wrong. Please try again later.");
@@ -83,7 +85,7 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -100,50 +102,14 @@ const Contact = () => {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.8, y: -20 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="glass rounded-2xl p-8 md:p-12 text-center min-h-[400px] flex flex-col items-center justify-center"
+                  className="glass rounded-2xl p-6 md:p-12 text-center min-h-[350px] md:min-h-[400px] flex flex-col items-center justify-center"
+
                 >
                   {/* Success animation container */}
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 15 }}
-                    className="relative mb-6"
-                  >
-                    {/* Outer ring */}
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: [0, 1.2, 1], opacity: [0, 0.5, 0.3] }}
-                      transition={{ delay: 0.3, duration: 0.8 }}
-                      className="absolute inset-0 w-24 h-24 rounded-full border-2 border-primary/30"
-                    />
-                    {/* Inner circle with icon */}
-                    <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center relative">
-                      <motion.div
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                      >
-                        <CheckCircle2 className="w-12 h-12 text-primary" />
-                      </motion.div>
-                    </div>
-                    {/* Sparkles */}
-                    {[...Array(6)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{
-                          scale: [0, 1, 0],
-                          opacity: [0, 1, 0],
-                          x: [0, (i % 2 === 0 ? 1 : -1) * (30 + i * 10)],
-                          y: [0, (i < 3 ? -1 : 1) * (20 + i * 5)]
-                        }}
-                        transition={{ delay: 0.5 + i * 0.1, duration: 0.8 }}
-                        className="absolute top-1/2 left-1/2"
-                      >
-                        <Sparkles className="w-4 h-4 text-primary" />
-                      </motion.div>
-                    ))}
-                  </motion.div>
+                  <div className="mb-8">
+                    <EnvelopeAnimation />
+                  </div>
+
 
                   <motion.h3
                     initial={{ opacity: 0, y: 10 }}
@@ -166,7 +132,7 @@ const Contact = () => {
                   <motion.div
                     initial={{ scaleX: 1 }}
                     animate={{ scaleX: 0 }}
-                    transition={{ duration: 4, ease: "linear" }}
+                    transition={{ duration: 6, ease: "linear" }}
                     className="absolute bottom-0 left-0 right-0 h-1 bg-primary/50 origin-left rounded-b-2xl"
                   />
                 </motion.div>
@@ -273,45 +239,62 @@ const Contact = () => {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            {/* Quick contact cards */}
-            <div className="glass rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 group">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Mail className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-foreground">Email Me</h3>
-                  <p className="text-muted-foreground text-sm">For project inquiries</p>
-                </div>
+            {/* Premium Simple Contact Cards */}
+            <motion.div
+              whileHover={{ y: -5, scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="glass rounded-2xl p-6 border-white/5 hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden cursor-pointer"
+            >
+              {/* Shimmer Effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] w-[50%]" />
               </div>
-              <a
-                href="mailto:tarunsaikumarinti3@gmail.com"
-                className="text-primary hover:underline font-medium"
-              >
-                tarunsaikumarinti3@gmail.com
-              </a>
-            </div>
 
-            <div className="glass rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 group">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Phone className="w-6 h-6 text-primary" />
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10 text-center sm:text-left">
+                <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500">
+                  <Mail className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors duration-500" />
                 </div>
-                <div>
-                  <h3 className="font-display font-bold text-foreground">Phone</h3>
-                  <p className="text-muted-foreground text-sm">Call or WhatsApp</p>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-display font-semibold text-foreground/80 group-hover:text-foreground transition-colors">Email</h3>
+                  <a
+                    href="mailto:tarunsaikumarinti3@gmail.com"
+                    className="text-primary font-bold text-base sm:text-lg block hover:underline underline-offset-4 break-words"
+                  >
+                    tarunsaikumarinti3@gmail.com
+                  </a>
                 </div>
               </div>
-              <a
-                href="tel:+919848151735"
-                className="text-primary hover:underline font-medium"
-              >
-                +91 9848151735
-              </a>
-            </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ y: -5, scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="glass rounded-2xl p-6 border-white/5 hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden cursor-pointer"
+            >
+              {/* Shimmer Effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] w-[50%]" />
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 relative z-10 text-center sm:text-left">
+                <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-500">
+                  <Phone className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors duration-500" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-display font-semibold text-foreground/80 group-hover:text-foreground transition-colors">Phone</h3>
+                  <a
+                    href="tel:+919848151735"
+                    className="text-primary font-bold text-lg sm:text-xl block hover:underline underline-offset-4"
+                  >
+                    +91 9848151735
+                  </a>
+
+                </div>
+              </div>
+            </motion.div>
 
             {/* Social Links */}
-            <div>
+            <div className="flex flex-col items-center sm:items-start">
               <h3 className="font-display font-bold text-foreground mb-4">Connect With Me</h3>
               <div className="flex gap-4">
                 {[

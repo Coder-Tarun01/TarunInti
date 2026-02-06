@@ -11,6 +11,7 @@ const projects = [
     impact: "Streamlined job application process with intuitive UI/UX",
     gradient: "from-cyan-500/20 to-blue-500/20",
     link: "https://mycareerbuild.com/",
+    image: "/mycareerbuild.png",
   },
   {
     title: "VFNCC Cultural Platform",
@@ -20,6 +21,7 @@ const projects = [
     impact: "Increased community engagement through modern web presence",
     gradient: "from-purple-500/20 to-pink-500/20",
     link: "https://vfncc.org/",
+    image: "/vfncc.png",
   },
   {
     title: "Techliv – IoT & Smart Homes",
@@ -29,6 +31,7 @@ const projects = [
     impact: "Clean, informative presence for IoT and smart home solutions",
     gradient: "from-amber-500/20 to-orange-500/20",
     link: "https://techliv.net/",
+    image: "/techliv.png",
   },
   {
     title: "Logistics Management System",
@@ -49,6 +52,15 @@ const projects = [
 ];
 
 const Projects = () => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
     <section id="projects" className="py-24 section-padding">
       <div className="max-w-6xl mx-auto">
@@ -64,90 +76,131 @@ const Projects = () => {
             Featured <span className="text-gradient">Projects</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A selection of projects that showcase my expertise in building 
+            A selection of projects that showcase my expertise in building
             scalable, user-focused web applications.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-8 project-card-container">
           {projects.map((project, index) => {
             const CardWrapper = "link" in project && project.link ? motion.a : motion.div;
             const wrapperProps =
               "link" in project && project.link
                 ? { href: project.link, target: "_blank", rel: "noopener noreferrer" }
                 : {};
+            const isImageProject = "image" in project && project.image;
+
             return (
-            <CardWrapper
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              viewport={{ once: true }}
-              className="group relative glass rounded-2xl overflow-hidden cursor-pointer block"
-              {...wrapperProps}
-            >
-              {/* Base gradient background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-50`} />
-              
-              {/* Default content - visible by default */}
-              <div className="relative p-6 md:p-8 transition-all duration-500 group-hover:opacity-0 group-hover:scale-95">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <span className="text-primary text-sm font-medium">{project.role}</span>
-                    <h3 className="font-display text-xl md:text-2xl font-bold text-foreground mt-1">
-                      {project.title}
-                    </h3>
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <ArrowUpRight className="w-5 h-5 text-primary" />
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed line-clamp-2">
-                  {project.description}
-                </p>
-              </div>
+              <CardWrapper
+                key={project.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                viewport={{ once: true }}
+                onMouseMove={!isImageProject ? handleMouseMove : undefined}
+                className={`group relative glass rounded-3xl overflow-hidden cursor-pointer block border-white/5 transition-all duration-500 min-h-[320px] lg:h-[310px] ${!isImageProject ? 'project-card' : 'hover:shadow-2xl hover:scale-[1.02]'}`}
+                {...wrapperProps}
+              >
+                {isImageProject ? (
+                  <>
+                    {/* Default View for Image Project */}
+                    <div className="relative p-8 h-full flex flex-col justify-between z-10 transition-opacity duration-500 group-hover:opacity-0">
+                      <div>
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+                            <span className="text-primary text-xs font-bold uppercase tracking-widest">{project.role}</span>
+                          </div>
+                          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+                            <ArrowUpRight className="w-5 h-5 text-muted-foreground" />
+                          </div>
+                        </div>
+                        <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                          {project.title}
+                        </h3>
+                        <p className="text-muted-foreground leading-relaxed line-clamp-2">
+                          {project.description}
+                        </p>
+                      </div>
+                      <div className="mt-8">
+                        <div className="flex flex-wrap gap-2">
+                          {project.techStack.map((tech) => (
+                            <span key={tech} className="px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-muted-foreground border border-white/10">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
 
-              {/* Hover overlay - full details */}
-              <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-primary/20 p-6 md:p-8 flex flex-col justify-between opacity-0 scale-105 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500">
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                    <span className="text-primary text-sm font-semibold uppercase tracking-wider">{project.role}</span>
-                  </div>
-                  <h3 className="font-display text-xl md:text-2xl font-bold text-foreground mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                    {project.description}
-                  </p>
-                  <p className="text-primary text-sm font-medium flex items-center gap-2">
-                    <span className="text-lg">✨</span> {project.impact}
-                  </p>
-                </div>
+                    {/* Hover Image Overlay */}
+                    <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-display text-2xl font-bold text-white">{project.title}</h3>
+                          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
+                            <ArrowUpRight className="w-5 h-5" />
+                          </div>
+                        </div>
+                        <p className="text-white/80 text-sm line-clamp-2">{project.impact}</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Background Gradient Layer */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-500`} />
 
-                {/* Tech Stack with staggered animation */}
-                <div className="space-y-3">
-                  <span className="text-xs text-muted-foreground uppercase tracking-wider">Tech Stack</span>
-                  <div className="flex flex-wrap gap-2">
-                    {project.techStack.map((tech, techIndex) => (
-                      <span
-                        key={tech}
-                        className="px-3 py-1.5 rounded-full text-xs font-semibold bg-primary/20 text-primary border border-primary/30 transform transition-all duration-300"
-                        style={{ transitionDelay: `${techIndex * 50}ms` }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                    {/* Visual Content */}
+                    <div className="relative p-8 h-full flex flex-col justify-between z-10">
+                      <div>
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+                            <span className="text-primary text-xs font-bold uppercase tracking-widest">{project.role}</span>
+                          </div>
+                          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                            <ArrowUpRight className="w-5 h-5" />
+                          </div>
+                        </div>
 
-                {/* View project indicator */}
-                <div className="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-primary flex items-center justify-center transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-200">
-                  <ArrowUpRight className="w-5 h-5 text-primary-foreground" />
-                </div>
-              </div>
-            </CardWrapper>
-          );
+                        <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
+                          {project.title}
+                        </h3>
+
+                        <p className="text-muted-foreground leading-relaxed line-clamp-2 group-hover:text-foreground/80 transition-colors">
+                          {project.description}
+                        </p>
+
+                        <div className="flex items-center gap-3 py-3 px-4 rounded-2xl bg-white/5 border border-white/10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                          <span className="text-lg">✨</span>
+                          <span className="text-sm font-medium text-foreground/90">{project.impact}</span>
+                        </div>
+                      </div>
+
+                      <div className="mt-8">
+                        <div className="flex flex-wrap gap-2">
+                          {project.techStack.map((tech) => (
+                            <span
+                              key={tech}
+                              className="tech-tag px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-muted-foreground border border-white/10 group-hover:border-primary/30 group-hover:text-primary transition-all duration-300"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Decorative Elements */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-primary/20 transition-all duration-500" />
+                  </>
+                )}
+              </CardWrapper>
+            );
           })}
         </div>
 
@@ -157,15 +210,15 @@ const Projects = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
-          <p className="text-muted-foreground mb-4">
+          <p className="text-muted-foreground mb-6">
             Want to see more or discuss a custom project?
           </p>
-          <Button variant="hero" size="lg" asChild>
+          <Button variant="hero" size="lg" className="rounded-full px-8" asChild>
             <a href="#contact">
               Let's Talk
-              <ArrowUpRight className="w-4 h-4 ml-1" />
+              <ArrowUpRight className="w-4 h-4 ml-2" />
             </a>
           </Button>
         </motion.div>

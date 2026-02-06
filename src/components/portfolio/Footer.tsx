@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,24 +13,30 @@ const Footer = () => {
           viewport={{ once: true }}
           className="flex flex-col md:flex-row items-center justify-between gap-4"
         >
-          <div className="font-display text-lg font-bold text-gradient">
-            INTI TARUN SAI KUMAR
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <div className="font-display text-lg sm:text-xl font-bold text-gradient whitespace-nowrap">
+              INTI TARUN SAI KUMAR
+            </div>
+            <p className="text-muted-foreground text-xs tracking-wider uppercase">
+              Full-Stack Developer
+            </p>
           </div>
 
-          <p className="text-muted-foreground text-sm flex items-center gap-1">
-            © {currentYear} • All Rights Reserved
-          </p>
-
-          <div className="flex items-center gap-6">
-            {["About", "Skills", "Projects", "Contact"].map((link) => (
-              <a
-                key={link}
-                href={`#${link.toLowerCase()}`}
-                className="text-muted-foreground hover:text-primary text-sm transition-colors"
-              >
-                {link}
-              </a>
-            ))}
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex items-center gap-6">
+              {["About", "Skills", "Projects", "Contact"].map((link) => (
+                <a
+                  key={link}
+                  href={`#${link.toLowerCase()}`}
+                  className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
+            <p className="text-muted-foreground/60 text-xs">
+              © {currentYear} • Designed & Built with ⚡
+            </p>
           </div>
         </motion.div>
       </div>
