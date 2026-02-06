@@ -34,6 +34,16 @@ const projects = [
     image: "/techliv.png",
   },
   {
+    title: "Premium Developer Portfolio",
+    description: "A high-end, responsive portfolio featuring advanced animations, glassmorphism, and premium aesthetics to showcase professional work.",
+    role: "Full Stack Developer",
+    techStack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "TypeScript"],
+    impact: "Created a stunning visual identity and seamless user experience",
+    gradient: "from-primary/20 to-teal-500/20",
+    link: "https://taruninti.vercel.app/",
+    image: "/portfolio.png",
+  },
+  {
     title: "Logistics Management System",
     description: "A comprehensive logistics and fleet management solution with real-time tracking and automated dispatch.",
     role: "Frontend Developer",
@@ -137,7 +147,7 @@ const Projects = () => {
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-700"
+                        className="w-full h-full object-cover object-top transform scale-110 group-hover:scale-100 transition-transform duration-700 grayscale blur-[2px] md:grayscale-0 md:blur-0 group-hover:grayscale-0 group-hover:blur-0"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
                         <div className="flex items-center justify-between mb-2">
