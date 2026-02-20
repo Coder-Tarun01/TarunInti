@@ -155,16 +155,16 @@ const Hero = () => {
           </motion.div>
 
           {/* Right Column: Visual Showcase */}
-          <div className="relative h-[450px] sm:h-[550px] lg:h-[550px] mt-12 lg:mt-0 lg:translate-y-12">
-            <div className="relative w-full h-full scale-[0.8] sm:scale-100 origin-center lg:origin-right">
-              {/* Animated Floating Cards - Adapted for Mobile Positioning */}
+          <div className="relative h-[450px] sm:h-[550px] lg:h-[550px] mt-12 lg:mt-0 lg:translate-y-12 max-w-2xl md:max-w-3xl lg:max-w-none mx-auto lg:mx-0 w-full">
+            <div className="relative w-full h-full scale-[0.8] sm:scale-90 md:scale-95 lg:scale-100 origin-center lg:origin-right">
+              {/* Animated Floating Cards - Adapted for Mobile & Tablet Positioning */}
               <FloatingCard
                 id="career-build"
                 delay={0}
                 title="Career Build Job Portal"
                 category="Production"
                 image="/mycareerbuild.png"
-                className="top-0 right-0 sm:right-0 z-30"
+                className="top-0 right-[-10px] sm:right-0 z-30"
               />
               <FloatingCard
                 id="vfncc"
@@ -172,7 +172,7 @@ const Hero = () => {
                 title="VFNCC Cultural Platform"
                 category="Industry"
                 image="/vfncc.png"
-                className="top-[40px] sm:top-[80px] -left-10 sm:-left-20 z-20"
+                className="top-[40px] sm:top-[80px] -left-10 sm:-left-20 md:left-0 lg:-left-20 z-20"
               />
               <FloatingCard
                 id="logistics"
@@ -180,7 +180,7 @@ const Hero = () => {
                 title="ShipGen.net Logistics"
                 category="Full-Stack"
                 image="/logistics.png"
-                className="top-[120px] sm:top-[180px] right-[-10px] sm:right-[-20px] z-40"
+                className="top-[120px] sm:top-[180px] right-[-15px] sm:right-[-20px] md:right-0 lg:right-[-20px] z-40"
               />
 
               <FloatingCard
@@ -188,8 +188,8 @@ const Hero = () => {
                 delay={1.2}
                 title="Tarun's OCR – Intel Scanner"
                 category="Rust Engine"
-                image="/ocr.jpeg"
-                className="top-[180px] -left-8 sm:bottom-[140px] sm:left-[20px] sm:top-auto z-10"
+                image="/Tarunsocr1.jpeg"
+                className="top-[180px] -left-8 sm:bottom-[140px] sm:left-[20px] md:left-0 sm:top-auto z-10"
               />
               <FloatingCard
                 id="sonicsync"
@@ -197,7 +197,7 @@ const Hero = () => {
                 title="SonicSync – Audio Sync"
                 category="Systems"
                 image="/sonicsync1.png"
-                className="top-[240px] right-[-15px] sm:bottom-0 sm:right-[-10px] sm:top-auto z-20"
+                className="top-[240px] right-[-15px] sm:bottom-0 sm:right-[-10px] md:right-0 sm:top-auto z-20"
               />
               <FloatingCard
                 id="techliv"
@@ -205,7 +205,7 @@ const Hero = () => {
                 title="Techliv – IoT & Homes"
                 category="Frontend"
                 image="/techliv.png"
-                className="top-[300px] -left-12 sm:bottom-[60px] sm:left-20 sm:top-auto z-30"
+                className="top-[300px] -left-12 sm:bottom-[60px] sm:left-20 md:left-32 sm:top-auto z-30"
               />
               <FloatingCard
                 id="portfolio"
@@ -213,7 +213,7 @@ const Hero = () => {
                 title="Developer Portfolio"
                 category="UI/UX"
                 image="/portfolio.png"
-                className="top-[-30px] left-[30px] sm:top-[-40px] sm:left-[40px] z-10"
+                className="top-[-30px] left-[30px] sm:top-[-40px] sm:left-[40px] md:left-[80px] z-10"
               />
 
               {/* Decorative Geometric Glows */}

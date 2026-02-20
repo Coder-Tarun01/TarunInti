@@ -84,7 +84,7 @@ const projects = [
     techStack: ["Kotlin", "Rust", "ML Kit", "OpenCV", "Android"],
     impact: "Restored advanced table detection and high-accuracy mode using a custom Rust engine",
     gradient: "from-amber-600/20 to-orange-600/20",
-    image: "/ocr.jpeg",
+    image: "/Tarunsocr1.jpeg",
   },
 ];
 
