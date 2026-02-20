@@ -1,9 +1,10 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const projects = [
   {
+    id: "career-build",
     title: "Career Build Job Portal",
     description: "A comprehensive job portal platform with advanced search, filters, and seamless user experience for job seekers and employers.",
     role: "Frontend Lead",
@@ -14,6 +15,7 @@ const projects = [
     image: "/mycareerbuild.png",
   },
   {
+    id: "vfncc",
     title: "VFNCC Cultural Platform",
     description: "A vibrant cultural event website showcasing community activities, event registrations, and cultural heritage.",
     role: "UI Developer",
@@ -24,6 +26,7 @@ const projects = [
     image: "/vfncc.png",
   },
   {
+    id: "techliv",
     title: "Techliv – IoT & Smart Homes",
     description: "A static website for Smart Home & Industrial IoT solutions, showcasing products and services for connected living.",
     role: "Frontend Developer",
@@ -34,6 +37,7 @@ const projects = [
     image: "/techliv.png",
   },
   {
+    id: "portfolio",
     title: "Premium Developer Portfolio",
     description: "A high-end, responsive portfolio featuring advanced animations, glassmorphism, and premium aesthetics to showcase professional work.",
     role: "Full Stack Developer",
@@ -44,6 +48,7 @@ const projects = [
     image: "/portfolio.png",
   },
   {
+    id: "logistics",
     title: "Logistics Management System",
     description: "A comprehensive logistics and fleet management solution with real-time tracking and automated dispatch.",
     role: "Frontend Developer",
@@ -53,6 +58,7 @@ const projects = [
     image: "/logistics.png",
   },
   {
+    id: "horilla",
     title: "Horilla HRMS Platform",
     description: "Enterprise-grade Human Resource Management System with full employee lifecycle management and analytics.",
     role: "Full React Frontend",
@@ -61,6 +67,7 @@ const projects = [
     gradient: "from-orange-500/20 to-red-500/20",
   },
   {
+    id: "sonicsync",
     title: "SonicSync – Synchronized Audio",
     description: "A multi-device synchronized audio playback system for Android, allowing a host to broadcast music to multiple speakers in perfect sync.",
     role: "Solo Creator & Developer",
@@ -70,6 +77,7 @@ const projects = [
     image: "/sonicsync1.png",
   },
   {
+    id: "ocr",
     title: "Tarun's OCR – Intel Scanner",
     description: "High-performance OCR application featuring advanced table detection and layout analysis by integrating a custom Rust engine with ML Kit.",
     role: "Solo Creator & Developer",
@@ -81,6 +89,28 @@ const projects = [
 ];
 
 const Projects = () => {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -94,9 +124,9 @@ const Projects = () => {
     <section id="projects" className="py-24 section-padding">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
@@ -110,7 +140,13 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 project-card-container">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 gap-8 project-card-container"
+        >
           {projects.map((project, index) => {
             const CardWrapper = "link" in project && project.link ? motion.a : motion.div;
             const wrapperProps =
@@ -122,10 +158,8 @@ const Projects = () => {
             return (
               <CardWrapper
                 key={project.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                viewport={{ once: true }}
+                id={project.id}
+                variants={itemVariants}
                 onMouseMove={!isImageProject ? handleMouseMove : undefined}
                 className={`group relative glass rounded-3xl overflow-hidden cursor-pointer block border-white/5 transition-all duration-500 min-h-[320px] lg:h-[310px] ${!isImageProject ? 'project-card' : 'hover:shadow-2xl hover:scale-[1.02]'}`}
                 {...wrapperProps}
@@ -231,13 +265,13 @@ const Projects = () => {
               </CardWrapper>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
           viewport={{ once: true }}
           className="mt-16 text-center"
         >

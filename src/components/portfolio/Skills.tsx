@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useState } from "react";
 
 const skillCategories = [
@@ -44,12 +44,21 @@ const SkillCard = ({ category, categoryIndex }: SkillCardProps) => {
     setAnimationKey(prev => prev + 1);
   };
 
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: categoryIndex * 0.15 }}
-      viewport={{ once: true }}
+      variants={itemVariants}
       className="glass rounded-2xl p-6 transition-all duration-300 hover:border-primary/50"
       onMouseEnter={handleMouseEnter}
     >
@@ -104,13 +113,23 @@ const SkillCard = ({ category, categoryIndex }: SkillCardProps) => {
 };
 
 const Skills = () => {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
   return (
     <section id="skills" className="py-24 section-padding bg-secondary/20">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
@@ -124,11 +143,17 @@ const Skills = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {skillCategories.map((category, categoryIndex) => (
             <SkillCard key={category.title} category={category} categoryIndex={categoryIndex} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

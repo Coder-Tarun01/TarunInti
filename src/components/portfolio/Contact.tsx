@@ -29,6 +29,28 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -69,9 +91,9 @@ const Contact = () => {
     <section id="contact" className="py-24 section-padding bg-secondary/20">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
@@ -88,9 +110,9 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
             viewport={{ once: true }}
             className="relative"
           >
@@ -98,23 +120,21 @@ const Contact = () => {
               {isSubmitted ? (
                 <motion.div
                   key="success"
-                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                   className="glass rounded-2xl p-6 md:p-12 text-center min-h-[350px] md:min-h-[400px] flex flex-col items-center justify-center"
-
                 >
                   {/* Success animation container */}
                   <div className="mb-8">
                     <EnvelopeAnimation />
                   </div>
 
-
                   <motion.h3
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
+                    transition={{ delay: 0.4 }}
                     className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3"
                   >
                     Message Sent! <span className="text-gradient">🎉</span>
@@ -122,7 +142,7 @@ const Contact = () => {
                   <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
+                    transition={{ delay: 0.5 }}
                     className="text-muted-foreground text-lg"
                   >
                     I'll get back to you within <span className="text-primary font-semibold">24 hours</span>
@@ -141,8 +161,8 @@ const Contact = () => {
                   key="form"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.4 }}
                   onSubmit={handleSubmit}
                   className="space-y-6"
                 >
@@ -233,14 +253,15 @@ const Contact = () => {
 
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
             className="space-y-8"
           >
             {/* Premium Simple Contact Cards */}
             <motion.div
+              variants={itemVariants}
               whileHover={{ y: -5, scale: 1.01 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="glass rounded-2xl p-6 border-white/5 hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden cursor-pointer"
@@ -267,6 +288,7 @@ const Contact = () => {
             </motion.div>
 
             <motion.div
+              variants={itemVariants}
               whileHover={{ y: -5, scale: 1.01 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="glass rounded-2xl p-6 border-white/5 hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden cursor-pointer"
@@ -288,13 +310,15 @@ const Contact = () => {
                   >
                     +91 9848151735
                   </a>
-
                 </div>
               </div>
             </motion.div>
 
             {/* Social Links */}
-            <div className="flex flex-col items-center sm:items-start">
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col items-center sm:items-start"
+            >
               <h3 className="font-display font-bold text-foreground mb-4">Connect With Me</h3>
               <div className="flex gap-4">
                 {[
@@ -314,11 +338,11 @@ const Contact = () => {
                   </a>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
-    </section>
+    </section >
   );
 };
 
