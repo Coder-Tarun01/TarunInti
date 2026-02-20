@@ -49,7 +49,8 @@ const projects = [
     role: "Frontend Developer",
     techStack: ["React", "Next.js", "Tailwind", "REST APIs"],
     impact: "Improved operational efficiency and tracking capabilities",
-    gradient: "from-green-500/20 to-emerald-500/20",
+    link: "https://shipgen.net/",
+    image: "/logistics.png",
   },
   {
     title: "Horilla HRMS Platform",
@@ -58,6 +59,24 @@ const projects = [
     techStack: ["React", "TypeScript", "Node.js", "PostgreSQL"],
     impact: "Collaborated with DevOps team on large-scale deployment",
     gradient: "from-orange-500/20 to-red-500/20",
+  },
+  {
+    title: "SonicSync – Synchronized Audio",
+    description: "A multi-device synchronized audio playback system for Android, allowing a host to broadcast music to multiple speakers in perfect sync.",
+    role: "Solo Creator & Developer",
+    techStack: ["Kotlin", "Rust", "Sync Algorithms", "Android"],
+    impact: "Achieved perfect audio synchronization with automatic drift correction",
+    gradient: "from-blue-600/20 to-indigo-600/20",
+    image: "/sonicsync1.png",
+  },
+  {
+    title: "Tarun's OCR – Intel Scanner",
+    description: "High-performance OCR application featuring advanced table detection and layout analysis by integrating a custom Rust engine with ML Kit.",
+    role: "Solo Creator & Developer",
+    techStack: ["Kotlin", "Rust", "ML Kit", "OpenCV", "Android"],
+    impact: "Restored advanced table detection and high-accuracy mode using a custom Rust engine",
+    gradient: "from-amber-600/20 to-orange-600/20",
+    image: "/ocr.jpeg",
   },
 ];
 
