@@ -75,6 +75,7 @@ const projects = [
     impact: "Achieved perfect audio synchronization with automatic drift correction",
     gradient: "from-blue-600/20 to-indigo-600/20",
     image: "/sonicsync1.png",
+    link: "https://github.com/Coder-Tarun01/koyila",
   },
   {
     id: "ocr",
@@ -85,6 +86,7 @@ const projects = [
     impact: "Restored advanced table detection and high-accuracy mode using a custom Rust engine",
     gradient: "from-amber-600/20 to-orange-600/20",
     image: "/Tarunsocr1.jpeg",
+    link: "https://github.com/Coder-Tarun01/OCR",
   },
 ];
 

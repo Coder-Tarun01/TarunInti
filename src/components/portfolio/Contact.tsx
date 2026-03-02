@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Send, Linkedin, Github, Phone } from "lucide-react";
+import { Mail, Send, Linkedin, Github, Phone, FileText } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { EnvelopeAnimation } from "@/components/ui/envelope-animation";
@@ -325,6 +325,7 @@ const Contact = () => {
                   { icon: Linkedin, href: "https://www.linkedin.com/in/tarun-inti-/", label: "LinkedIn" },
                   { icon: Github, href: "https://github.com/Coder-Tarun01", label: "GitHub" },
                   { icon: WhatsAppIcon, href: "https://wa.me/919848151735", label: "WhatsApp" },
+                  { icon: FileText, href: "/INTI TARUN SAI KUMAR.pdf", label: "Resume" },
                 ].map((social) => (
                   <a
                     key={social.label}

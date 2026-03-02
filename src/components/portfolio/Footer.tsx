@@ -33,9 +33,17 @@ const Footer = () => {
                   {link}
                 </a>
               ))}
+              <a
+                href="/INTI TARUN SAI KUMAR.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
+              >
+                Resume
+              </a>
             </div>
             <p className="text-muted-foreground/60 text-xs">
-              © {currentYear} • Designed & Built with ⚡
+              © {currentYear} • Crafted & Developed by Tarun
             </p>
           </div>
         </motion.div>

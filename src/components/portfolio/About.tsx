@@ -2,8 +2,8 @@ import { motion, Variants } from "framer-motion";
 import { Code2, Rocket, Users, Zap } from "lucide-react";
 
 const stats = [
-  { number: "7+", label: "Months Experience", icon: Rocket },
-  { number: "4+", label: "Projects Delivered", icon: Code2 },
+  { number: "9+", label: "Months Experience", icon: Rocket },
+  { number: "7+", label: "Projects Delivered", icon: Code2 },
   { number: "100%", label: "Client Satisfaction", icon: Users },
   { number: "24h", label: "Response Time", icon: Zap },
 ];

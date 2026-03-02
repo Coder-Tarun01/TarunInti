@@ -69,9 +69,16 @@ const Navbar = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
-            <Button variant="hero" size="default" asChild>
-              <a href="#contact">Hire Me</a>
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button variant="outline" size="sm" className="hidden sm:flex border-primary/20 hover:bg-primary/5" asChild>
+                <a href="/INTI TARUN SAI KUMAR.pdf" target="_blank" rel="noopener noreferrer">
+                  Resume
+                </a>
+              </Button>
+              <Button variant="hero" size="default" asChild>
+                <a href="#contact">Hire Me</a>
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Menu Button using Sheet */}
@@ -108,8 +115,13 @@ const Navbar = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="mt-6 px-2"
+                    className="mt-6 px-2 space-y-3"
                   >
+                    <Button variant="outline" size="xl" className="w-full border-primary/20" asChild>
+                      <a href="/INTI TARUN SAI KUMAR.pdf" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
+                        View Resume
+                      </a>
+                    </Button>
                     <Button variant="hero" size="xl" className="w-full" asChild>
                       <a href="#contact" onClick={() => setIsOpen(false)}>
                         Hire Me
