@@ -1,66 +1,96 @@
-import { motion, Variants } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+import { useCallback, useRef, useState } from "react";
+import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
-const projects = [
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  role: string;
+  techStack: string[];
+  impact: string;
+  gradient: string;
+  image?: string;
+  liveDemo?: string;
+  github?: string;
+}
+
+const projects: Project[] = [
   {
     id: "career-build",
     title: "Career Build Job Portal",
-    description: "A comprehensive job portal platform with advanced search, filters, and seamless user experience for job seekers and employers.",
+    description:
+      "A comprehensive job portal platform with advanced search, filters, and seamless user experience for job seekers and employers.",
     role: "Frontend Lead",
     techStack: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
     impact: "Streamlined job application process with intuitive UI/UX",
-    gradient: "from-cyan-500/20 to-blue-500/20",
-    link: "https://mycareerbuild.com/",
+    gradient: "from-blue-500/20 to-blue-600/20",
+    liveDemo: "https://mycareerbuild.com/",
     image: "/mycareerbuild.png",
   },
   {
     id: "vfncc",
     title: "VFNCC Cultural Platform",
-    description: "A vibrant cultural event website showcasing community activities, event registrations, and cultural heritage.",
+    description:
+      "A vibrant cultural event website showcasing community activities, event registrations, and cultural heritage.",
     role: "UI Developer",
     techStack: ["React", "CSS3", "JavaScript", "Responsive Design"],
     impact: "Increased community engagement through modern web presence",
     gradient: "from-purple-500/20 to-pink-500/20",
-    link: "https://vfncc.org/",
+    liveDemo: "https://vfncc.org/",
     image: "/vfncc.png",
   },
   {
     id: "techliv",
     title: "Techliv – IoT & Smart Homes",
-    description: "A static website for Smart Home & Industrial IoT solutions, showcasing products and services for connected living.",
+    description:
+      "A static website for Smart Home & Industrial IoT solutions, showcasing products and services for connected living.",
     role: "Frontend Developer",
     techStack: ["HTML", "CSS", "JavaScript", "Responsive Design"],
     impact: "Clean, informative presence for IoT and smart home solutions",
     gradient: "from-amber-500/20 to-orange-500/20",
-    link: "https://techliv.net/",
+    liveDemo: "https://techliv.net/",
     image: "/techliv.png",
   },
   {
     id: "portfolio",
     title: "Premium Developer Portfolio",
-    description: "A high-end, responsive portfolio featuring advanced animations, glassmorphism, and premium aesthetics to showcase professional work.",
+    description:
+      "A high-end, responsive portfolio featuring advanced animations, glassmorphism, and premium aesthetics to showcase professional work.",
     role: "Full Stack Developer",
     techStack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "TypeScript"],
     impact: "Created a stunning visual identity and seamless user experience",
-    gradient: "from-primary/20 to-teal-500/20",
-    link: "https://taruninti.vercel.app/",
-    image: "/portfolio.png",
+    gradient: "from-primary/20 to-blue-600/20",
+    liveDemo: "https://taruninti.vercel.app/",
+    image: "/portfolio1.png",
   },
   {
     id: "logistics",
     title: "Logistics Management System",
-    description: "A comprehensive logistics and fleet management solution with real-time tracking and automated dispatch.",
+    description:
+      "A comprehensive logistics and fleet management solution with real-time tracking and automated dispatch.",
     role: "Frontend Developer",
     techStack: ["React", "Next.js", "Tailwind", "REST APIs"],
     impact: "Improved operational efficiency and tracking capabilities",
-    link: "https://shipgen.net/",
+    gradient: "from-blue-500/20 to-blue-700/20",
+    liveDemo: "https://shipgen.net/",
     image: "/logistics.png",
   },
   {
     id: "horilla",
     title: "Horilla HRMS Platform",
-    description: "Enterprise-grade Human Resource Management System with full employee lifecycle management and analytics.",
+    description:
+      "Enterprise-grade Human Resource Management System with full employee lifecycle management and analytics.",
     role: "Full React Frontend",
     techStack: ["React", "TypeScript", "Node.js", "PostgreSQL"],
     impact: "Collaborated with DevOps team on large-scale deployment",
@@ -69,36 +99,308 @@ const projects = [
   {
     id: "sonicsync",
     title: "SonicSync – Synchronized Audio",
-    description: "A multi-device synchronized audio playback system for Android, allowing a host to broadcast music to multiple speakers in perfect sync.",
+    description:
+      "A multi-device synchronized audio playback system for Android, allowing a host to broadcast music to multiple speakers in perfect sync.",
     role: "Solo Creator & Developer",
     techStack: ["Kotlin", "Rust", "Sync Algorithms", "Android"],
     impact: "Achieved perfect audio synchronization with automatic drift correction",
     gradient: "from-blue-600/20 to-indigo-600/20",
     image: "/sonicsync1.png",
-    link: "https://github.com/Coder-Tarun01/koyila",
+    github: "https://github.com/Coder-Tarun01/koyila",
   },
   {
     id: "ocr",
     title: "Tarun's OCR – Intel Scanner",
-    description: "High-performance OCR application featuring advanced table detection and layout analysis by integrating a custom Rust engine with ML Kit.",
+    description:
+      "High-performance OCR application featuring advanced table detection and layout analysis by integrating a custom Rust engine with ML Kit.",
     role: "Solo Creator & Developer",
     techStack: ["Kotlin", "Rust", "ML Kit", "OpenCV", "Android"],
     impact: "Restored advanced table detection and high-accuracy mode using a custom Rust engine",
     gradient: "from-amber-600/20 to-orange-600/20",
     image: "/Tarunsocr1.jpeg",
-    link: "https://github.com/Coder-Tarun01/OCR",
+    github: "https://github.com/Coder-Tarun01/OCR",
   },
 ];
 
+const HOVER_LEAVE_DELAY = 200;
+
+const ProjectThumbnail = ({ project, className }: { project: Project; className?: string }) => {
+  if (project.image) {
+    return (
+      <img
+        src={project.image}
+        alt={`Screenshot of ${project.title}`}
+        width={640}
+        height={360}
+        loading="lazy"
+        decoding="async"
+        className={cn("h-full w-full object-cover object-top", className)}
+      />
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        `relative flex h-full w-full items-center justify-center bg-gradient-to-br ${project.gradient} from-40% to-background`,
+        className,
+      )}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.25),transparent_55%)]" />
+      <span className="relative z-10 px-6 text-center font-display text-lg font-bold text-foreground/80">
+        {project.title}
+      </span>
+    </div>
+  );
+};
+
+const PreviewPanelContent = ({ project }: { project: Project }) => (
+  <div className="relative overflow-hidden rounded-2xl border border-white/[0.14] bg-[linear-gradient(160deg,hsl(222_47%_10%/0.98),hsl(222_47%_5%/0.99))] shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_24px_64px_-16px_rgba(0,0,0,0.75),0_0_48px_-12px_hsl(var(--primary)/0.22)] backdrop-blur-2xl">
+    {/* Ambient accent glow */}
+    <div
+      className={cn(
+        "pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-gradient-to-br opacity-50 blur-3xl",
+        project.gradient,
+      )}
+    />
+    <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+
+    {/* Browser-style screenshot frame */}
+    <div className="relative p-2.5">
+      <div className="overflow-hidden rounded-xl border border-white/10 bg-black/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
+        <div className="flex items-center gap-1.5 border-b border-white/[0.06] bg-white/[0.03] px-3 py-2">
+          <span className="h-2 w-2 rounded-full bg-white/15" />
+          <span className="h-2 w-2 rounded-full bg-white/15" />
+          <span className="h-2 w-2 rounded-full bg-primary/50 shadow-[0_0_6px_hsl(var(--primary)/0.8)]" />
+          <div className="ml-2 h-4 flex-1 rounded-md border border-white/[0.05] bg-white/[0.03]" />
+        </div>
+        <div className="relative aspect-[16/9] overflow-hidden">
+          <ProjectThumbnail project={project} className="scale-[1.02] transition-transform duration-500" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[hsl(222_47%_6%/0.95)] via-[hsl(222_47%_6%/0.15)] to-transparent" />
+          <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[0.04]" />
+        </div>
+      </div>
+
+      <span className="absolute left-5 top-5 inline-flex items-center rounded-full border border-primary/25 bg-black/50 px-2.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.18em] text-primary shadow-[0_0_12px_hsl(var(--primary)/0.2)] backdrop-blur-md">
+        {project.role}
+      </span>
+    </div>
+
+    {/* Content */}
+    <div className="relative space-y-3 px-3.5 pb-3.5 pt-1">
+      <div className="flex items-start justify-between gap-2">
+        <h3 className="font-display text-base font-bold leading-tight tracking-tight text-foreground">
+          {project.title}
+        </h3>
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/20 bg-primary/10 text-primary shadow-[0_0_16px_hsl(var(--primary)/0.15)]">
+          <ArrowUpRight className="h-3.5 w-3.5" />
+        </div>
+      </div>
+
+      <p className="line-clamp-2 text-[11px] leading-relaxed text-muted-foreground/90">{project.description}</p>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+
+      <div className="flex flex-wrap gap-1.5">
+        {project.techStack.map((tech, i) => (
+          <span
+            key={tech}
+            className={cn(
+              "rounded-full border px-2 py-0.5 text-[9px] font-semibold tracking-wide",
+              i === 0
+                ? "border-primary/30 bg-primary/10 text-primary"
+                : "border-white/10 bg-white/[0.04] text-foreground/75",
+            )}
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap gap-2 pt-0.5">
+        {project.liveDemo && (
+          <Button
+            variant="hero"
+            size="sm"
+            className="h-7 flex-1 rounded-lg px-3 text-[10px] font-bold shadow-[0_0_20px_hsl(var(--primary)/0.2)] sm:flex-none"
+            asChild
+          >
+            <a href={project.liveDemo} target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-3 w-3" />
+              Live Demo
+            </a>
+          </Button>
+        )}
+        {project.github && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-7 flex-1 rounded-lg border-white/15 bg-white/[0.03] px-3 text-[10px] font-semibold hover:border-primary/30 hover:bg-primary/5 sm:flex-none"
+            asChild
+          >
+            <a href={project.github} target="_blank" rel="noopener noreferrer">
+              <Github className="h-3 w-3" />
+              GitHub
+            </a>
+          </Button>
+        )}
+        {!project.liveDemo && !project.github && (
+          <span className="text-[10px] italic text-muted-foreground/80">Private enterprise project</span>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
+interface ProjectCardProps {
+  project: Project;
+  variants: Variants;
+  isActive: boolean;
+  isDimmed: boolean;
+  onHoverStart: (id: string) => void;
+  onHoverEnd: () => void;
+  onPreviewEnter: () => void;
+  onTap: (project: Project) => void;
+  isMobile: boolean;
+}
+
+const ProjectCard = ({
+  project,
+  variants,
+  isActive,
+  isDimmed,
+  onHoverStart,
+  onHoverEnd,
+  onPreviewEnter,
+  onTap,
+  isMobile,
+}: ProjectCardProps) => {
+  const handleMouseEnter = () => {
+    if (isMobile || window.innerWidth < 768) return;
+    onHoverStart(project.id);
+  };
+
+  return (
+    <motion.div
+      variants={variants}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={onHoverEnd}
+      className={cn("relative", isActive ? "z-30" : isDimmed ? "z-0 opacity-40" : "z-0")}
+    >
+      {/* Expanded preview – opens directly on top of this card */}
+      <AnimatePresence>
+        {isActive && !isMobile && (
+          <motion.div
+            key="preview"
+            role="dialog"
+            aria-label={`${project.title} preview`}
+            onMouseEnter={onPreviewEnter}
+            onMouseLeave={onHoverEnd}
+            initial={{ opacity: 0, y: 20, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.96 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-1/2 top-0 z-50 w-[min(280px,calc(100vw-2rem))] -translate-x-1/2"
+          >
+            <PreviewPanelContent project={project} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Original card – text-only, premium style; image shows in hover preview only */}
+      <div
+        id={project.id}
+        onClick={() => isMobile && onTap(project)}
+        className={cn(
+          "group/card relative flex min-h-[148px] cursor-pointer flex-col justify-between overflow-hidden rounded-xl border p-4 transition-[border-color,box-shadow] duration-300 sm:min-h-[156px] sm:p-5",
+          "border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-sm",
+          "hover:border-primary/25 hover:shadow-[0_8px_32px_rgba(0,0,0,0.35)]",
+          isActive && !isMobile ? "invisible border-transparent" : "",
+        )}
+      >
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-[0.12] transition-opacity duration-300 group-hover/card:opacity-[0.2]",
+            project.gradient,
+          )}
+        />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-60" />
+
+        <div className="relative z-10">
+          <div className="mb-3 flex items-start justify-between gap-2">
+            <span className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-primary">
+              {project.role}
+            </span>
+            <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground/60 transition-colors duration-300 group-hover/card:text-primary" />
+          </div>
+
+          <h3 className="font-display text-sm font-bold leading-snug text-foreground sm:text-base">
+            {project.title}
+          </h3>
+          <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+            {project.description}
+          </p>
+        </div>
+
+        <div className="relative z-10 mt-3 flex flex-wrap gap-1.5">
+          {project.techStack.slice(0, 3).map((tech) => (
+            <span
+              key={tech}
+              className="rounded-md border border-white/8 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.techStack.length > 3 && (
+            <span className="rounded-md border border-white/8 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium text-muted-foreground/70">
+              +{project.techStack.length - 3}
+            </span>
+          )}
+        </div>
+
+        {isMobile && (
+          <div className="relative z-10 mt-3 border-t border-white/8 pt-3">
+            <span className="text-[10px] font-medium text-primary">Tap to preview</span>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
 const Projects = () => {
+  const isMobile = useIsMobile();
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [mobileProject, setMobileProject] = useState<Project | null>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearLeaveTimer = useCallback(() => {
+    if (leaveTimer.current) {
+      clearTimeout(leaveTimer.current);
+      leaveTimer.current = null;
+    }
+  }, []);
+
+  const handleHoverStart = useCallback(
+    (id: string) => {
+      clearLeaveTimer();
+      setHoveredId(id);
+    },
+    [clearLeaveTimer],
+  );
+
+  const handlePreviewEnter = useCallback(() => {
+    clearLeaveTimer();
+  }, [clearLeaveTimer]);
+
+  const handleHoverEnd = useCallback(() => {
+    clearLeaveTimer();
+    leaveTimer.current = setTimeout(() => setHoveredId(null), HOVER_LEAVE_DELAY);
+  }, [clearLeaveTimer]);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
   };
 
   const itemVariants: Variants = {
@@ -106,39 +408,27 @@ const Projects = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1] as const,
-      },
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
     },
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
-  };
-
   return (
-    <section id="projects" className="py-24 section-padding">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="overflow-visible py-24 section-padding" aria-labelledby="projects-heading">
+      <div className="mx-auto max-w-6xl overflow-visible">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <span className="text-primary font-medium text-sm uppercase tracking-wider">My Work</span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-6">
+          <span className="text-sm font-medium uppercase tracking-wider text-primary">My Work</span>
+          <h2 id="projects-heading" className="mt-3 mb-6 font-display text-3xl font-bold md:text-4xl lg:text-5xl">
             Featured <span className="text-gradient">Projects</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A selection of projects that showcase my expertise in building
-            scalable, user-focused web applications.
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            A selection of projects that showcase my expertise in building scalable, user-focused web
+            applications.
           </p>
         </motion.div>
 
@@ -147,129 +437,43 @@ const Projects = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-8 project-card-container"
+          className="grid gap-4 overflow-visible sm:grid-cols-2 lg:grid-cols-3 sm:gap-5"
         >
-          {projects.map((project, index) => {
-            const CardWrapper = "link" in project && project.link ? motion.a : motion.div;
-            const wrapperProps =
-              "link" in project && project.link
-                ? { href: project.link, target: "_blank", rel: "noopener noreferrer" }
-                : {};
-            const isImageProject = "image" in project && project.image;
-
-            return (
-              <CardWrapper
-                key={project.title}
-                id={project.id}
-                variants={itemVariants}
-                onMouseMove={!isImageProject ? handleMouseMove : undefined}
-                className={`group relative glass rounded-3xl overflow-hidden cursor-pointer block border-white/5 transition-all duration-500 min-h-[320px] lg:h-[310px] ${!isImageProject ? 'project-card' : 'hover:shadow-2xl hover:scale-[1.02]'}`}
-                {...wrapperProps}
-              >
-                {isImageProject ? (
-                  <>
-                    {/* Default View for Image Project */}
-                    <div className="relative p-8 h-full flex flex-col justify-between z-10 transition-opacity duration-500 group-hover:opacity-0">
-                      <div>
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-                            <span className="text-primary text-xs font-bold uppercase tracking-widest">{project.role}</span>
-                          </div>
-                          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
-                            <ArrowUpRight className="w-5 h-5 text-muted-foreground" />
-                          </div>
-                        </div>
-                        <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-                          {project.title}
-                        </h3>
-                        <p className="text-muted-foreground leading-relaxed line-clamp-2">
-                          {project.description}
-                        </p>
-                      </div>
-                      <div className="mt-8">
-                        <div className="flex flex-wrap gap-2">
-                          {project.techStack.map((tech) => (
-                            <span key={tech} className="px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-muted-foreground border border-white/10">
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Hover Image Overlay */}
-                    <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover object-top transform scale-110 group-hover:scale-100 transition-transform duration-700 grayscale blur-[2px] md:grayscale-0 md:blur-0 group-hover:grayscale-0 group-hover:blur-0"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="font-display text-2xl font-bold text-white">{project.title}</h3>
-                          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-                            <ArrowUpRight className="w-5 h-5" />
-                          </div>
-                        </div>
-                        <p className="text-white/80 text-sm line-clamp-2">{project.impact}</p>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Background Gradient Layer */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-500`} />
-
-                    {/* Visual Content */}
-                    <div className="relative p-8 h-full flex flex-col justify-between z-10">
-                      <div>
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-                            <span className="text-primary text-xs font-bold uppercase tracking-widest">{project.role}</span>
-                          </div>
-                          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                            <ArrowUpRight className="w-5 h-5" />
-                          </div>
-                        </div>
-
-                        <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300">
-                          {project.title}
-                        </h3>
-
-                        <p className="text-muted-foreground leading-relaxed line-clamp-2 group-hover:text-foreground/80 transition-colors">
-                          {project.description}
-                        </p>
-
-                        <div className="flex items-center gap-3 py-3 px-4 rounded-2xl bg-white/5 border border-white/10 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                          <span className="text-lg">✨</span>
-                          <span className="text-sm font-medium text-foreground/90">{project.impact}</span>
-                        </div>
-                      </div>
-
-                      <div className="mt-8">
-                        <div className="flex flex-wrap gap-2">
-                          {project.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="tech-tag px-3 py-1.5 rounded-lg text-xs font-bold bg-white/5 text-muted-foreground border border-white/10 group-hover:border-primary/30 group-hover:text-primary transition-all duration-300"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Decorative Elements */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-primary/20 transition-all duration-500" />
-                  </>
-                )}
-              </CardWrapper>
-            );
-          })}
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              variants={itemVariants}
+              isActive={hoveredId === project.id}
+              isDimmed={!!hoveredId && hoveredId !== project.id}
+              onHoverStart={handleHoverStart}
+              onHoverEnd={handleHoverEnd}
+              onPreviewEnter={handlePreviewEnter}
+              onTap={setMobileProject}
+              isMobile={isMobile}
+            />
+          ))}
         </motion.div>
 
-        {/* CTA */}
+        <Sheet open={!!mobileProject} onOpenChange={(open) => !open && setMobileProject(null)}>
+          <SheetContent
+            side="bottom"
+            className="max-h-[92vh] overflow-y-auto rounded-t-3xl border-white/10 bg-background/95 px-0 pb-8 pt-6 backdrop-blur-xl"
+          >
+            {mobileProject && (
+              <>
+                <SheetHeader className="sr-only">
+                  <SheetTitle>{mobileProject.title}</SheetTitle>
+                  <SheetDescription>{mobileProject.description}</SheetDescription>
+                </SheetHeader>
+                <div className="px-4">
+                  <PreviewPanelContent project={mobileProject} />
+                </div>
+              </>
+            )}
+          </SheetContent>
+        </Sheet>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -277,13 +481,11 @@ const Projects = () => {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <p className="text-muted-foreground mb-6">
-            Want to see more or discuss a custom project?
-          </p>
+          <p className="mb-6 text-muted-foreground">Want to see more or discuss a custom project?</p>
           <Button variant="hero" size="lg" className="rounded-full px-8" asChild>
             <a href="#contact">
               Let's Talk
-              <ArrowUpRight className="w-4 h-4 ml-2" />
+              <ArrowUpRight className="ml-2 h-4 w-4" />
             </a>
           </Button>
         </motion.div>

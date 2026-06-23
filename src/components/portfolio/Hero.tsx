@@ -10,13 +10,14 @@ import {
   Zap
 } from "lucide-react";
 
-const FloatingCard = ({ id, delay, title, category, image, className }: {
+const FloatingCard = ({ id, delay, title, category, image, className, priority = false }: {
   id: string;
   delay: number;
   title: string;
   category: string;
   image: string;
   className?: string;
+  priority?: boolean;
 }) => (
   <motion.a
     href={`#${id}`}
@@ -34,7 +35,16 @@ const FloatingCard = ({ id, delay, title, category, image, className }: {
   >
     <div className="relative aspect-video rounded-lg overflow-hidden mb-2 sm:mb-3 bg-muted/20 border border-white/5">
       <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent group-hover:opacity-0 transition-opacity" />
-      <img src={image} alt={title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+      <img
+        src={image}
+        alt={`${title} project preview – ${category}`}
+        width={256}
+        height={144}
+        decoding="async"
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
+        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+      />
     </div>
     <div className="flex items-center justify-between gap-2">
       <div className="min-w-0">
@@ -75,7 +85,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center pt-28 pb-16 overflow-hidden bg-background">
+    <section className="relative min-h-[100dvh] flex items-center pt-28 pb-16 overflow-hidden bg-background" aria-label="Introduction">
       {/* SaaS Background Essentials */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-primary/10 rounded-full blur-[80px] md:blur-[120px]" />
@@ -165,6 +175,7 @@ const Hero = () => {
                 category="Production"
                 image="/mycareerbuild.png"
                 className="top-0 right-[-10px] sm:right-0 z-30"
+                priority
               />
               <FloatingCard
                 id="vfncc"
@@ -212,7 +223,7 @@ const Hero = () => {
                 delay={2.4}
                 title="Developer Portfolio"
                 category="UI/UX"
-                image="/portfolio.png"
+                image="/portfolio1.png"
                 className="top-[-30px] left-[30px] sm:top-[-40px] sm:left-[40px] md:left-[80px] z-10"
               />
 
@@ -236,6 +247,7 @@ const Hero = () => {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 opacity-50"
+        aria-hidden="true"
       >
         <div className="w-[1px] h-8 bg-gradient-to-b from-primary to-transparent" />
       </motion.div>

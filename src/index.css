@@ -16,8 +16,8 @@
     --popover: 222 47% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 175 80% 50%;
-    --primary-foreground: 222 47% 6%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 222 30% 14%;
     --secondary-foreground: 210 40% 98%;
@@ -25,35 +25,35 @@
     --muted: 222 30% 12%;
     --muted-foreground: 215 20% 55%;
 
-    --accent: 175 80% 50%;
-    --accent-foreground: 222 47% 6%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 222 30% 18%;
     --input: 222 30% 18%;
-    --ring: 175 80% 50%;
+    --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
     /* Custom tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(175 80% 50%), hsl(190 90% 45%));
+    --gradient-primary: hsl(217 91% 60%);
     --gradient-hero: linear-gradient(135deg, hsl(222 47% 6%) 0%, hsl(222 47% 12%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(222 30% 12% / 0.8), hsl(222 30% 8% / 0.6));
-    --gradient-glow: radial-gradient(ellipse at center, hsl(175 80% 50% / 0.15), transparent 70%);
-    --shadow-glow: 0 0 60px hsl(175 80% 50% / 0.3);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(217 91% 60% / 0.15), transparent 70%);
+    --shadow-glow: 0 0 60px hsl(217 91% 60% / 0.3);
     --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.4);
-    --shadow-hover: 0 16px 48px hsl(175 80% 50% / 0.2);
+    --shadow-hover: 0 16px 48px hsl(217 91% 60% / 0.2);
 
     --sidebar-background: 222 47% 8%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 175 80% 50%;
-    --sidebar-primary-foreground: 222 47% 6%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 222 30% 14%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 222 30% 18%;
-    --sidebar-ring: 175 80% 50%;
+    --sidebar-ring: 217 91% 60%;
   }
 }
 
@@ -90,8 +90,7 @@
 
 @layer components {
   .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-primary);
+    @apply text-primary;
   }
 
   .glass {
@@ -108,7 +107,7 @@
     content: '';
     position: absolute;
     inset: -2px;
-    background: var(--gradient-primary);
+    background: hsl(var(--primary));
     border-radius: inherit;
     opacity: 0;
     filter: blur(20px);
@@ -159,8 +158,8 @@
       from 0deg,
       transparent 0deg,
       transparent 270deg,
-      hsl(175 80% 50%) 270deg,
-      hsl(190 90% 45%) 360deg
+      hsl(217 91% 60%) 270deg,
+      hsl(217 91% 60%) 360deg
     );
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -182,7 +181,7 @@
   }
 
   .glow-border-card:hover {
-    box-shadow: 0 0 30px hsl(175 80% 50% / 0.2);
+    box-shadow: 0 0 30px hsl(217 91% 60% / 0.2);
   }
 
   /* Project Card Premium Effect */
@@ -199,7 +198,7 @@
     transform: translateY(-10px) rotateX(2deg) rotateY(-2deg);
     box-shadow: 
       -10px 10px 20px rgba(0, 0, 0, 0.4),
-      0 0 20px hsl(175 80% 50% / 0.1);
+      0 0 20px hsl(217 91% 60% / 0.1);
   }
 
   .project-card::before {

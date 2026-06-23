@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -88,7 +88,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 section-padding bg-secondary/20">
+    <section id="contact" className="py-24 section-padding bg-secondary/20" aria-labelledby="contact-heading">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -98,7 +98,7 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <span className="text-primary font-medium text-sm uppercase tracking-wider">Get In Touch</span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-6">
+          <h2 id="contact-heading" className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-6">
             Let's Build Something <span className="text-gradient">Amazing</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -164,6 +164,7 @@ const Contact = () => {
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.4 }}
                   onSubmit={handleSubmit}
+                  aria-label="Contact form"
                   className="space-y-6"
                 >
                   <div>
@@ -325,7 +326,7 @@ const Contact = () => {
                   { icon: Linkedin, href: "https://www.linkedin.com/in/tarun-inti-/", label: "LinkedIn" },
                   { icon: Github, href: "https://github.com/Coder-Tarun01", label: "GitHub" },
                   { icon: WhatsAppIcon, href: "https://wa.me/919848151735", label: "WhatsApp" },
-                  { icon: FileText, href: "/INTI TARUN SAI KUMAR.pdf", label: "Resume" },
+                  { icon: FileText, href: "/Tarun_inti.pdf", label: "Resume" },
                 ].map((social) => (
                   <a
                     key={social.label}

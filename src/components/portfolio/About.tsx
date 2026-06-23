@@ -32,7 +32,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="py-24 section-padding">
+    <section id="about" className="py-24 section-padding" aria-labelledby="about-heading">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ const About = () => {
           className="text-center mb-16"
         >
           <span className="text-primary font-medium text-sm uppercase tracking-wider">About Me</span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-6">
+          <h2 id="about-heading" className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-6">
             Passionate Developer, <span className="text-gradient">Problem Solver</span>
           </h2>
         </motion.div>

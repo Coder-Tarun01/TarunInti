@@ -1,14 +1,8 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+
+# Block non-public build artifacts if ever exposed
+Disallow: /src/
+Disallow: /node_modules/
+
+Sitemap: https://taruninti.vercel.app/sitemap.xml

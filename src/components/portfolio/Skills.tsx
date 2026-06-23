@@ -124,7 +124,7 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-24 section-padding bg-secondary/20">
+    <section id="skills" className="py-24 section-padding bg-secondary/20" aria-labelledby="skills-heading">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -134,7 +134,7 @@ const Skills = () => {
           className="text-center mb-16"
         >
           <span className="text-primary font-medium text-sm uppercase tracking-wider">My Skills</span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-6">
+          <h2 id="skills-heading" className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mt-3 mb-6">
             Technologies I <span className="text-gradient">Master</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">

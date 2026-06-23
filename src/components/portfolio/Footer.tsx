@@ -4,7 +4,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-8 section-padding border-t border-border">
+    <footer className="py-8 section-padding border-t border-border" role="contentinfo">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -23,7 +23,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col items-center gap-4">
-            <div className="flex items-center gap-6">
+            <nav aria-label="Footer navigation" className="flex items-center gap-6">
               {["About", "Skills", "Projects", "Contact"].map((link) => (
                 <a
                   key={link}
@@ -34,14 +34,15 @@ const Footer = () => {
                 </a>
               ))}
               <a
-                href="/INTI TARUN SAI KUMAR.pdf"
+                href="/Tarun_inti.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Download resume PDF"
                 className="text-muted-foreground hover:text-primary text-sm font-medium transition-colors"
               >
                 Resume
               </a>
-            </div>
+            </nav>
             <p className="text-muted-foreground/60 text-xs">
               © {currentYear} • Crafted & Developed by Tarun
             </p>

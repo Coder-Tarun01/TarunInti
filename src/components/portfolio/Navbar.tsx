@@ -34,6 +34,7 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
+      aria-label="Primary navigation"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "glass py-3" : "py-5"
         }`}
     >
@@ -71,7 +72,7 @@ const Navbar = () => {
             ))}
             <div className="flex items-center gap-3">
               <Button variant="outline" size="sm" className="hidden sm:flex border-primary/20 hover:bg-primary/5" asChild>
-                <a href="/INTI TARUN SAI KUMAR.pdf" target="_blank" rel="noopener noreferrer">
+                <a href="/Tarun_inti.pdf" target="_blank" rel="noopener noreferrer">
                   Resume
                 </a>
               </Button>
@@ -85,7 +86,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="hover:bg-primary/10">
+                <Button variant="ghost" size="icon" className="hover:bg-primary/10" aria-label="Open navigation menu">
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
@@ -118,7 +119,7 @@ const Navbar = () => {
                     className="mt-6 px-2 space-y-3"
                   >
                     <Button variant="outline" size="xl" className="w-full border-primary/20" asChild>
-                      <a href="/INTI TARUN SAI KUMAR.pdf" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
+                      <a href="/Tarun_inti.pdf" target="_blank" rel="noopener noreferrer" onClick={() => setIsOpen(false)}>
                         View Resume
                       </a>
                     </Button>
