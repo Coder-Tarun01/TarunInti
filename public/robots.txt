@@ -5,4 +5,4 @@ Allow: /
 Disallow: /src/
 Disallow: /node_modules/
 
-Sitemap: https://taruninti.vercel.app/sitemap.xml
+Sitemap: https://taruninti.in/sitemap.xml

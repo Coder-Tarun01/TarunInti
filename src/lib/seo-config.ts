@@ -1,7 +1,7 @@
 const normalizeSiteUrl = (url: string) => url.replace(/\/+$/, "");
 
 export const SITE_URL = normalizeSiteUrl(
-  import.meta.env.VITE_SITE_URL ?? "https://taruninti.vercel.app",
+  import.meta.env.VITE_SITE_URL ?? "https://taruninti.in",
 );
 
 export const SITE_NAME = "Tarun.dev";

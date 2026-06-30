@@ -1,6 +1,6 @@
 # SEO Audit & Implementation Report
 
-**Project:** Pixel Perfect Portfolio (`taruninti.vercel.app`)  
+**Project:** Pixel Perfect Portfolio (`taruninti.in`)  
 **Date:** June 22, 2026  
 **Stack:** Vite + React SPA (not Next.js)
 
@@ -85,7 +85,7 @@ Implemented in both `index.html` (for non-JS crawlers) and `PageSeo.tsx` (for SP
 
 ### 3. Canonical URLs
 
-- Homepage: `https://taruninti.vercel.app/`
+- Homepage: `https://taruninti.in/`
 - 404 pages: canonical set to the attempted path with `noindex` to avoid duplicate indexing
 
 Configurable via `VITE_SITE_URL` in `.env`.
@@ -112,7 +112,7 @@ User-agent: *
 Allow: /
 Disallow: /src/
 Disallow: /node_modules/
-Sitemap: https://taruninti.vercel.app/sitemap.xml
+Sitemap: https://taruninti.in/sitemap.xml
 ```
 
 ### 7. Heading Structure Audit
@@ -229,7 +229,7 @@ npm run build   # ✅ Passes – sitemap generated + Vite build successful
 - [ ] Validate OG tags: [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
 - [ ] Validate Twitter cards: [Twitter Card Validator](https://cards-dev.twitter.com/validator)
 - [ ] Run Lighthouse SEO audit (target 95+)
-- [ ] Confirm `https://taruninti.vercel.app/robots.txt` and `/sitemap.xml` are live
+- [ ] Confirm `https://taruninti.in/robots.txt` and `/sitemap.xml` are live
 
 ---
 

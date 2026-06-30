@@ -1,7 +1,7 @@
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const siteUrl = (process.env.VITE_SITE_URL ?? "https://taruninti.vercel.app").replace(
+const siteUrl = (process.env.VITE_SITE_URL ?? "https://taruninti.in").replace(
   /\/+$/,
   "",
 );

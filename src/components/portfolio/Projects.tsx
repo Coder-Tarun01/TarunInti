@@ -71,7 +71,7 @@ const projects: Project[] = [
     techStack: ["React", "Vite", "Tailwind CSS", "Framer Motion", "TypeScript"],
     impact: "Created a stunning visual identity and seamless user experience",
     gradient: "from-primary/20 to-blue-600/20",
-    liveDemo: "https://taruninti.vercel.app/",
+    liveDemo: "https://taruninti.in/",
     image: "/portfolio1.png",
   },
   {
