@@ -2,6 +2,7 @@ import Navbar from "@/components/portfolio/Navbar";
 import Hero from "@/components/portfolio/Hero";
 import PageSeo from "@/components/seo/PageSeo";
 import JsonLd from "@/components/seo/JsonLd";
+import ScrollToTop from "@/components/portfolio/ScrollToTop";
 import LazySection, {
   LazyAbout,
   LazySkills,
@@ -32,6 +33,7 @@ const Index = () => {
           <LazySection component={LazyContact} minHeight="700px" />
         </main>
         <LazySection component={LazyFooter} minHeight="120px" rootMargin="100px" />
+        <ScrollToTop />
       </div>
     </>
   );

@@ -36,7 +36,7 @@ const projects: Project[] = [
     impact: "Streamlined job application process with intuitive UI/UX",
     gradient: "from-blue-500/20 to-blue-600/20",
     liveDemo: "https://mycareerbuild.com/",
-    image: "/mycareerbuild.png",
+    image: "/mycareerbuild.webp",
   },
   {
     id: "vfncc",
@@ -48,7 +48,7 @@ const projects: Project[] = [
     impact: "Increased community engagement through modern web presence",
     gradient: "from-purple-500/20 to-pink-500/20",
     liveDemo: "https://vfncc.org/",
-    image: "/vfncc.png",
+    image: "/vfncc.webp",
   },
   {
     id: "techliv",
@@ -60,7 +60,7 @@ const projects: Project[] = [
     impact: "Clean, informative presence for IoT and smart home solutions",
     gradient: "from-amber-500/20 to-orange-500/20",
     liveDemo: "https://techliv.net/",
-    image: "/techliv.png",
+    image: "/techliv.webp",
   },
   {
     id: "portfolio",
@@ -72,7 +72,7 @@ const projects: Project[] = [
     impact: "Created a stunning visual identity and seamless user experience",
     gradient: "from-primary/20 to-blue-600/20",
     liveDemo: "https://taruninti.in/",
-    image: "/portfolio1.png",
+    image: "/portfolio1.webp",
   },
   {
     id: "logistics",
@@ -84,7 +84,7 @@ const projects: Project[] = [
     impact: "Improved operational efficiency and tracking capabilities",
     gradient: "from-blue-500/20 to-blue-700/20",
     liveDemo: "https://shipgen.net/",
-    image: "/logistics.png",
+    image: "/logistics.webp",
   },
   {
     id: "horilla",
@@ -105,7 +105,7 @@ const projects: Project[] = [
     techStack: ["Kotlin", "Rust", "Sync Algorithms", "Android"],
     impact: "Achieved perfect audio synchronization with automatic drift correction",
     gradient: "from-blue-600/20 to-indigo-600/20",
-    image: "/sonicsync1.png",
+    image: "/sonicsync1.webp",
     github: "https://github.com/Coder-Tarun01/koyila",
   },
   {
@@ -117,7 +117,7 @@ const projects: Project[] = [
     techStack: ["Kotlin", "Rust", "ML Kit", "OpenCV", "Android"],
     impact: "Restored advanced table detection and high-accuracy mode using a custom Rust engine",
     gradient: "from-amber-600/20 to-orange-600/20",
-    image: "/Tarunsocr1.jpeg",
+    image: "/Tarunsocr1.webp",
     github: "https://github.com/Coder-Tarun01/OCR",
   },
 ];
