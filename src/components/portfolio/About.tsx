@@ -1,4 +1,4 @@
-import { motion, Variants } from "framer-motion";
+import { motion, Variants } from "@/lib/motion";
 import { Code2, Rocket, Users, Zap } from "lucide-react";
 
 const stats = [

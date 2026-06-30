@@ -1,4 +1,4 @@
-import { motion, Variants } from "framer-motion";
+import { motion, Variants } from "@/lib/motion";
 import { useState } from "react";
 
 const skillCategories = [

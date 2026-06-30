@@ -1,12 +1,14 @@
 import Navbar from "@/components/portfolio/Navbar";
 import Hero from "@/components/portfolio/Hero";
-import About from "@/components/portfolio/About";
-import Skills from "@/components/portfolio/Skills";
-import Projects from "@/components/portfolio/Projects";
-import Contact from "@/components/portfolio/Contact";
-import Footer from "@/components/portfolio/Footer";
 import PageSeo from "@/components/seo/PageSeo";
 import JsonLd from "@/components/seo/JsonLd";
+import LazySection, {
+  LazyAbout,
+  LazySkills,
+  LazyProjects,
+  LazyContact,
+  LazyFooter,
+} from "@/components/LazySection";
 
 const Index = () => {
   return (
@@ -24,12 +26,12 @@ const Index = () => {
         <Navbar />
         <main id="main-content">
           <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Contact />
+          <LazySection component={LazyAbout} minHeight="500px" />
+          <LazySection component={LazySkills} minHeight="400px" />
+          <LazySection component={LazyProjects} minHeight="600px" />
+          <LazySection component={LazyContact} minHeight="700px" />
         </main>
-        <Footer />
+        <LazySection component={LazyFooter} minHeight="120px" rootMargin="100px" />
       </div>
     </>
   );

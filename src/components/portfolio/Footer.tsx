@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "@/lib/motion";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

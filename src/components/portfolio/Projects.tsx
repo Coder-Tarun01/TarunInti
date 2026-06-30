@@ -1,4 +1,4 @@
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "@/lib/motion";
 import { useCallback, useRef, useState } from "react";
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";

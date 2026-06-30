@@ -1,11 +1,16 @@
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { lazy, Suspense, useState } from "react";
+import { motion, AnimatePresence, Variants } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Send, Linkedin, Github, Phone, FileText } from "lucide-react";
-import { useState } from "react";
 import { toast } from "sonner";
-import { EnvelopeAnimation } from "@/components/ui/envelope-animation";
+
+const EnvelopeAnimation = lazy(() =>
+  import("@/components/ui/envelope-animation").then((module) => ({
+    default: module.EnvelopeAnimation,
+  })),
+);
 
 
 const WhatsAppIcon = (props: React.ComponentProps<'svg'>) => (
@@ -128,7 +133,9 @@ const Contact = () => {
                 >
                   {/* Success animation container */}
                   <div className="mb-8">
-                    <EnvelopeAnimation />
+                    <Suspense fallback={null}>
+                      <EnvelopeAnimation />
+                    </Suspense>
                   </div>
 
                   <motion.h3
