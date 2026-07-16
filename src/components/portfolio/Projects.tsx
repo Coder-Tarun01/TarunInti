@@ -1,5 +1,6 @@
 import { motion, AnimatePresence, Variants } from "@/lib/motion";
 import { useCallback, useRef, useState } from "react";
+import { useMotionValue, useSpring } from "framer-motion";
 import { ArrowUpRight, ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -154,7 +155,13 @@ const ProjectThumbnail = ({ project, className }: { project: Project; className?
   );
 };
 
-const PreviewPanelContent = ({ project }: { project: Project }) => (
+const PreviewPanelContent = ({
+  project,
+  showDetails = false,
+}: {
+  project: Project;
+  showDetails?: boolean;
+}) => (
   <div className="relative overflow-hidden rounded-2xl border border-white/[0.14] bg-[linear-gradient(160deg,hsl(222_47%_10%/0.98),hsl(222_47%_5%/0.99))] shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_24px_64px_-16px_rgba(0,0,0,0.75),0_0_48px_-12px_hsl(var(--primary)/0.22)] backdrop-blur-2xl">
     {/* Ambient accent glow */}
     <div
@@ -197,57 +204,61 @@ const PreviewPanelContent = ({ project }: { project: Project }) => (
         </div>
       </div>
 
-      <p className="line-clamp-2 text-[11px] leading-relaxed text-muted-foreground/90">{project.description}</p>
+      {showDetails && (
+        <>
+          <p className="line-clamp-2 text-[11px] leading-relaxed text-muted-foreground/90">{project.description}</p>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
 
-      <div className="flex flex-wrap gap-1.5">
-        {project.techStack.map((tech, i) => (
-          <span
-            key={tech}
-            className={cn(
-              "rounded-full border px-2 py-0.5 text-[9px] font-semibold tracking-wide",
-              i === 0
-                ? "border-primary/30 bg-primary/10 text-primary"
-                : "border-white/10 bg-white/[0.04] text-foreground/75",
+          <div className="flex flex-wrap gap-1.5">
+            {project.techStack.map((tech, i) => (
+              <span
+                key={tech}
+                className={cn(
+                  "rounded-full border px-2 py-0.5 text-[9px] font-semibold tracking-wide",
+                  i === 0
+                    ? "border-primary/30 bg-primary/10 text-primary"
+                    : "border-white/10 bg-white/[0.04] text-foreground/75",
+                )}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-2 pt-0.5">
+            {project.liveDemo && (
+              <Button
+                variant="hero"
+                size="sm"
+                className="h-7 flex-1 rounded-lg px-3 text-[10px] font-bold shadow-[0_0_20px_hsl(var(--primary)/0.2)] sm:flex-none"
+                asChild
+              >
+                <a href={project.liveDemo} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-3 w-3" />
+                  Live Demo
+                </a>
+              </Button>
             )}
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
-
-      <div className="flex flex-wrap gap-2 pt-0.5">
-        {project.liveDemo && (
-          <Button
-            variant="hero"
-            size="sm"
-            className="h-7 flex-1 rounded-lg px-3 text-[10px] font-bold shadow-[0_0_20px_hsl(var(--primary)/0.2)] sm:flex-none"
-            asChild
-          >
-            <a href={project.liveDemo} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3 w-3" />
-              Live Demo
-            </a>
-          </Button>
-        )}
-        {project.github && (
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-7 flex-1 rounded-lg border-white/15 bg-white/[0.03] px-3 text-[10px] font-semibold hover:border-primary/30 hover:bg-primary/5 sm:flex-none"
-            asChild
-          >
-            <a href={project.github} target="_blank" rel="noopener noreferrer">
-              <Github className="h-3 w-3" />
-              GitHub
-            </a>
-          </Button>
-        )}
-        {!project.liveDemo && !project.github && (
-          <span className="text-[10px] italic text-muted-foreground/80">Private enterprise project</span>
-        )}
-      </div>
+            {project.github && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-7 flex-1 rounded-lg border-white/15 bg-white/[0.03] px-3 text-[10px] font-semibold hover:border-primary/30 hover:bg-primary/5 sm:flex-none"
+                asChild
+              >
+                <a href={project.github} target="_blank" rel="noopener noreferrer">
+                  <Github className="h-3 w-3" />
+                  GitHub
+                </a>
+              </Button>
+            )}
+            {!project.liveDemo && !project.github && (
+              <span className="text-[10px] italic text-muted-foreground/80">Private enterprise project</span>
+            )}
+          </div>
+        </>
+      )}
     </div>
   </div>
 );
@@ -259,7 +270,6 @@ interface ProjectCardProps {
   isDimmed: boolean;
   onHoverStart: (id: string) => void;
   onHoverEnd: () => void;
-  onPreviewEnter: () => void;
   onTap: (project: Project) => void;
   isMobile: boolean;
 }
@@ -271,7 +281,6 @@ const ProjectCard = ({
   isDimmed,
   onHoverStart,
   onHoverEnd,
-  onPreviewEnter,
   onTap,
   isMobile,
 }: ProjectCardProps) => {
@@ -280,86 +289,114 @@ const ProjectCard = ({
     onHoverStart(project.id);
   };
 
+  const handleRowClick = () => {
+    if (isMobile) {
+      onTap(project);
+    } else if (project.liveDemo) {
+      window.open(project.liveDemo, "_blank", "noopener,noreferrer");
+    } else if (project.github) {
+      window.open(project.github, "_blank", "noopener,noreferrer");
+    }
+  };
+
   return (
     <motion.div
       variants={variants}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={onHoverEnd}
-      className={cn("relative", isActive ? "z-30" : isDimmed ? "z-0 opacity-40" : "z-0")}
+      className={cn("relative overflow-visible", isActive ? "z-30" : isDimmed ? "z-0 opacity-40" : "z-0")}
     >
-      {/* Expanded preview – opens directly on top of this card */}
-      <AnimatePresence>
-        {isActive && !isMobile && (
-          <motion.div
-            key="preview"
-            role="dialog"
-            aria-label={`${project.title} preview`}
-            onMouseEnter={onPreviewEnter}
-            onMouseLeave={onHoverEnd}
-            initial={{ opacity: 0, y: 20, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.96 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-1/2 top-0 z-50 w-[min(280px,calc(100vw-2rem))] -translate-x-1/2"
-          >
-            <PreviewPanelContent project={project} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Original card – text-only, premium style; image shows in hover preview only */}
       <div
         id={project.id}
-        onClick={() => isMobile && onTap(project)}
+        onClick={handleRowClick}
         className={cn(
-          "group/card relative flex min-h-[148px] cursor-pointer flex-col justify-between overflow-hidden rounded-xl border p-4 transition-[border-color,box-shadow] duration-300 sm:min-h-[156px] sm:p-5",
+          "group/card relative flex w-full cursor-pointer flex-col justify-between overflow-visible rounded-xl border p-5 transition-[border-color,box-shadow] duration-300 sm:p-6 md:flex-row md:items-center lg:p-8",
           "border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-sm",
-          "hover:border-primary/25 hover:shadow-[0_8px_32px_rgba(0,0,0,0.35)]",
-          isActive && !isMobile ? "invisible border-transparent" : "",
+          "hover:border-primary/25 hover:shadow-[0_8px_40px_-12px_rgba(26,109,255,0.2)]",
+          isActive && !isMobile ? "border-primary/30 shadow-[0_8px_40px_-12px_rgba(26,109,255,0.2)]" : "",
         )}
       >
         <div
           className={cn(
-            "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-[0.12] transition-opacity duration-300 group-hover/card:opacity-[0.2]",
+            "pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br opacity-[0.12] transition-opacity duration-300 group-hover/card:opacity-[0.2]",
             project.gradient,
           )}
         />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-60" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-60 rounded-t-xl" />
 
-        <div className="relative z-10">
-          <div className="mb-3 flex items-start justify-between gap-2">
+        <div className="relative z-10 flex-1 md:pr-12">
+          <div className="mb-3 flex items-center gap-2">
             <span className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-primary">
               {project.role}
             </span>
-            <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground/60 transition-colors duration-300 group-hover/card:text-primary" />
           </div>
 
-          <h3 className="font-display text-sm font-bold leading-snug text-foreground sm:text-base">
+          <h3 className="font-display text-base font-bold leading-snug text-foreground sm:text-lg md:text-xl group-hover/card:text-primary transition-colors duration-300">
             {project.title}
           </h3>
-          <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
+          <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-muted-foreground sm:text-sm max-w-2xl">
             {project.description}
           </p>
+          <div className="mt-3.5 flex flex-wrap gap-1.5">
+            {project.techStack.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-md border border-white/8 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
 
-        <div className="relative z-10 mt-3 flex flex-wrap gap-1.5">
-          {project.techStack.slice(0, 3).map((tech) => (
-            <span
-              key={tech}
-              className="rounded-md border border-white/8 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
+        <div className="relative z-10 mt-4 flex flex-wrap items-center gap-3 md:mt-0 md:justify-end shrink-0">
+          {project.liveDemo && (
+            <Button
+              variant="hero"
+              size="sm"
+              className="h-8 rounded-lg px-3 text-[11px] font-bold shadow-[0_0_20px_hsl(var(--primary)/0.2)]"
+              asChild
             >
-              {tech}
-            </span>
-          ))}
-          {project.techStack.length > 3 && (
-            <span className="rounded-md border border-white/8 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium text-muted-foreground/70">
-              +{project.techStack.length - 3}
-            </span>
+              <a
+                href={project.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+                Live Demo
+              </a>
+            </Button>
           )}
+          {project.github && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 rounded-lg border-white/15 bg-white/[0.03] px-3 text-[11px] font-semibold hover:border-primary/30 hover:bg-primary/5"
+              asChild
+            >
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Github className="h-3.5 w-3.5" />
+                GitHub
+              </a>
+            </Button>
+          )}
+          {!project.liveDemo && !project.github && (
+            <span className="text-[11px] italic text-muted-foreground/80 pr-2">Private enterprise project</span>
+          )}
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-muted-foreground/60 transition-all duration-300 group-hover/card:border-primary/30 group-hover/card:bg-primary/10 group-hover/card:text-primary group-hover/card:scale-110 ml-1">
+            <ArrowUpRight className="h-4 w-4" />
+          </div>
         </div>
 
         {isMobile && (
-          <div className="relative z-10 mt-3 border-t border-white/8 pt-3">
+          <div className="relative z-10 mt-3 border-t border-white/8 pt-3 w-full">
             <span className="text-[10px] font-medium text-primary">Tap to preview</span>
           </div>
         )}
@@ -373,6 +410,22 @@ const Projects = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [mobileProject, setMobileProject] = useState<Project | null>(null);
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isMobile) return;
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (rect) {
+      x.set(e.clientX - rect.left);
+      y.set(e.clientY - rect.top);
+    }
+  };
 
   const clearLeaveTimer = useCallback(() => {
     if (leaveTimer.current) {
@@ -389,13 +442,14 @@ const Projects = () => {
     [clearLeaveTimer],
   );
 
-  const handlePreviewEnter = useCallback(() => {
-    clearLeaveTimer();
-  }, [clearLeaveTimer]);
-
   const handleHoverEnd = useCallback(() => {
     clearLeaveTimer();
     leaveTimer.current = setTimeout(() => setHoveredId(null), HOVER_LEAVE_DELAY);
+  }, [clearLeaveTimer]);
+
+  const handleContainerLeave = useCallback(() => {
+    clearLeaveTimer();
+    setHoveredId(null);
   }, [clearLeaveTimer]);
 
   const containerVariants: Variants = {
@@ -414,7 +468,12 @@ const Projects = () => {
 
   return (
     <section id="projects" className="overflow-visible py-24 section-padding" aria-labelledby="projects-heading">
-      <div className="mx-auto max-w-6xl overflow-visible">
+      <div
+        ref={containerRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleContainerLeave}
+        className="mx-auto max-w-6xl overflow-visible relative"
+      >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -437,7 +496,7 @@ const Projects = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid gap-4 overflow-visible sm:grid-cols-2 lg:grid-cols-3 sm:gap-5"
+          className="flex flex-col gap-6 overflow-visible"
         >
           {projects.map((project) => (
             <ProjectCard
@@ -448,12 +507,34 @@ const Projects = () => {
               isDimmed={!!hoveredId && hoveredId !== project.id}
               onHoverStart={handleHoverStart}
               onHoverEnd={handleHoverEnd}
-              onPreviewEnter={handlePreviewEnter}
               onTap={setMobileProject}
               isMobile={isMobile}
             />
           ))}
         </motion.div>
+
+        <AnimatePresence>
+          {hoveredId && !isMobile && (
+            <motion.div
+              key="floating-preview"
+              style={{
+                left: x,
+                top: y,
+                x: "-50%",
+              }}
+              className="pointer-events-none absolute z-50 w-[320px] md:w-[420px]"
+              initial={{ opacity: 0, scale: 0.9, y: "-35%", filter: "blur(8px)" }}
+              animate={{ opacity: 1, scale: 1, y: "-50%", filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 0.9, y: "-35%", filter: "blur(8px)" }}
+              transition={{ type: "spring", stiffness: 260, damping: 24 }}
+            >
+              {(() => {
+                const activeProj = projects.find((p) => p.id === hoveredId);
+                return activeProj ? <PreviewPanelContent project={activeProj} /> : null;
+              })()}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <Sheet open={!!mobileProject} onOpenChange={(open) => !open && setMobileProject(null)}>
           <SheetContent
@@ -467,7 +548,7 @@ const Projects = () => {
                   <SheetDescription>{mobileProject.description}</SheetDescription>
                 </SheetHeader>
                 <div className="px-4">
-                  <PreviewPanelContent project={mobileProject} />
+                  <PreviewPanelContent project={mobileProject} showDetails={true} />
                 </div>
               </>
             )}
