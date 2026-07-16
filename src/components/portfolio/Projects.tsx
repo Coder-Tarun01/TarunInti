@@ -435,9 +435,7 @@ const ScrollStackCard = memo(({
   const scrollOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.65]);
 
   const handleCardClick = () => {
-    if (isMobile) {
-      onTap(project);
-    } else if (project.liveDemo) {
+    if (project.liveDemo) {
       window.open(project.liveDemo, "_blank", "noopener,noreferrer");
     } else if (project.github) {
       window.open(project.github, "_blank", "noopener,noreferrer");
@@ -676,9 +674,7 @@ const AbsoluteStackCard = memo(({
   const opacity = useTransform(scrollYProgress, inputPoints, opacityPoints);
 
   const handleCardClick = () => {
-    if (isMobile) {
-      onTap(project);
-    } else if (project.liveDemo) {
+    if (project.liveDemo) {
       window.open(project.liveDemo, "_blank", "noopener,noreferrer");
     } else if (project.github) {
       window.open(project.github, "_blank", "noopener,noreferrer");
@@ -1035,7 +1031,16 @@ const Projects = () => {
                   <SheetTitle>{mobileProject.title}</SheetTitle>
                   <SheetDescription>{mobileProject.description}</SheetDescription>
                 </SheetHeader>
-                <div className="px-4">
+                <div
+                  className="px-4 cursor-pointer active:scale-[0.99] transition-transform duration-200"
+                  onClick={() => {
+                    if (mobileProject.liveDemo) {
+                      window.open(mobileProject.liveDemo, "_blank", "noopener,noreferrer");
+                    } else if (mobileProject.github) {
+                      window.open(mobileProject.github, "_blank", "noopener,noreferrer");
+                    }
+                  }}
+                >
                   <PreviewPanelContent project={mobileProject} showDetails={true} />
                 </div>
               </>
