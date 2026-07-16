@@ -1,4 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#1b1b1f" />
-  <path d="M30 50 L45 35 M30 50 L45 65 M70 50 L55 35 M70 50 L55 65 M48 70 L52 30" stroke="#3b82f6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <defs>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="25" fill="#090a0f" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2" />
+  <text x="50" y="62" font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-size="44" font-weight="900" fill="url(#glow)" text-anchor="middle" letter-spacing="-3">IT</text>
 </svg>

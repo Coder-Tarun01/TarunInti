@@ -168,7 +168,7 @@ const styles = {
     zIndex: 9999,
     "--white": "#ffffff",
     "--blue": "#1a6dff",
-  } as React.CSSProperties & Record<string, string>,
+  } as React.CSSProperties & Record<string, any>,
   center: {
     display: "flex",
     alignItems: "center",
