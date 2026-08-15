@@ -5,8 +5,11 @@ import JsonLd from "@/components/seo/JsonLd";
 import ScrollToTop from "@/components/portfolio/ScrollToTop";
 import LazySection, {
   LazyAbout,
+  LazyServices,
+  LazyExpertise,
   LazySkills,
   LazyProjects,
+  LazyTestimonials,
   LazyContact,
   LazyFooter,
 } from "@/components/LazySection";
@@ -28,8 +31,11 @@ const Index = () => {
         <main id="main-content">
           <Hero />
           <LazySection component={LazyAbout} minHeight="500px" />
+          <LazySection component={LazyServices} minHeight="600px" />
+          <LazySection component={LazyExpertise} minHeight="600px" />
           <LazySection component={LazySkills} minHeight="400px" />
           <LazySection component={LazyProjects} minHeight="600px" />
+          <LazySection component={LazyTestimonials} minHeight="600px" />
           <LazySection component={LazyContact} minHeight="700px" />
         </main>
         <LazySection component={LazyFooter} minHeight="120px" rootMargin="100px" />

@@ -44,8 +44,11 @@ const LazySection = ({
 };
 
 export const LazyAbout = lazy(() => import("@/components/portfolio/About"));
+export const LazyServices = lazy(() => import("@/components/portfolio/Services"));
+export const LazyExpertise = lazy(() => import("@/components/portfolio/Expertise"));
 export const LazySkills = lazy(() => import("@/components/portfolio/Skills"));
 export const LazyProjects = lazy(() => import("@/components/portfolio/Projects"));
+export const LazyTestimonials = lazy(() => import("@/components/portfolio/Testimonials"));
 export const LazyContact = lazy(() => import("@/components/portfolio/Contact"));
 export const LazyFooter = lazy(() => import("@/components/portfolio/Footer"));
 

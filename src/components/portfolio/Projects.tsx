@@ -13,6 +13,11 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
+interface ProjectLink {
+  label: string;
+  url: string;
+}
+
 interface Project {
   id: string;
   title: string;
@@ -23,21 +28,121 @@ interface Project {
   gradient: string;
   image?: string;
   liveDemo?: string;
+  liveDemoLabel?: string;
   github?: string;
+  extraLinks?: ProjectLink[];
+  highlights?: string[];
 }
 
 const projects: Project[] = [
   {
-    id: "career-build",
-    title: "Career Build Job Portal",
+    id: "shipgen",
+    title: "ShipGen — Fleet & Logistics Management",
     description:
-      "A comprehensive job portal platform with advanced search, filters, and seamless user experience for job seekers and employers.",
-    role: "Frontend Lead",
-    techStack: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
-    impact: "Streamlined job application process with intuitive UI/UX",
-    gradient: "from-blue-500/20 to-blue-600/20",
-    liveDemo: "https://mycareerbuild.com/",
-    image: "/mycareerbuild.webp",
+      "A full-stack fleet and logistics management platform designed to centralize vehicle, driver, fleet, and shipment operations in a single application. Contributed across frontend, backend API integration, auth, and database-driven workflows.",
+    role: "Junior Full Stack Developer — Tanasvi Technologies",
+    techStack: ["React.js", "Laravel/PHP", "MySQL", "Redis", "REST APIs", "Tailwind CSS"],
+    impact: "Centralized fleet, vehicle, driver, and shipment operations into a responsive, full-stack application.",
+    gradient: "from-blue-600/20 to-teal-500/20",
+    image: "/projects/logistics.webp",
+    liveDemo: "https://app.shipgen.net/",
+    liveDemoLabel: "View Live Application",
+    extraLinks: [
+      {
+        label: "Visit Website",
+        url: "https://shipgen.net/",
+      },
+    ],
+    highlights: [
+      "🚚 Fleet & 🚗 Vehicle Management — Manage fleets, vehicles, and operational data",
+      "👨‍✈️ Driver & 📦 Shipment Management — Handle driver assignments and shipment workflows",
+      "🔐 Authentication & 📊 Workflows — Protected routes, management dashboards & REST API integrations",
+      "🗄️ Database Operations — Worked with MySQL, Redis, and application data pipelines",
+    ],
+  },
+  {
+    id: "twoio",
+    title: "2io — Digital Marketing SaaS Platform",
+    description:
+      "An integrated digital marketing platform combining SEO analytics, keyword research, AI content creation, social media publishing, and n8n marketing automation into a unified workflow.",
+    role: "Junior Full Stack Developer — Tanasvi Technologies",
+    techStack: [
+      "React.js",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "PostgreSQL",
+      "REST APIs",
+      "Google Search Console API",
+      "LinkedIn API",
+      "n8n",
+    ],
+    impact:
+      "Implemented Google Search Console & LinkedIn API integrations, keyword generation, and n8n marketing automation workflows.",
+    gradient: "from-purple-600/20 to-indigo-600/20",
+    highlights: [
+      "📈 SEO & Search Analytics — Google Search Console integration for search performance data & keyword research",
+      "📲 Social Media Publishing — Content publishing workflows for platforms using LinkedIn API",
+      "✍️ Content Studio & AI — Workflows for blogs, social posts, emails & AI-assisted media generation",
+      "⚡ Marketing Automation — Automated marketing pipelines using n8n and FastAPI REST integrations",
+    ],
+  },
+  {
+    id: "calcstudio",
+    title: "CalcStudio — Online Calculator Platform",
+    description:
+      "A comprehensive online calculator platform featuring 65+ specialized calculators across finance, health, tax, mathematics, and everyday calculation categories.",
+    role: "Full Stack Developer (Personal Project)",
+    techStack: ["React.js", "TypeScript", "JavaScript", "Tailwind CSS", "Responsive Web Design", "SEO"],
+    impact:
+      "Designed & developed 65+ custom calculators with reusable component architecture, mobile responsiveness, and SEO optimization.",
+    gradient: "from-cyan-500/20 to-blue-600/20",
+    image: "/projects/calcstudio.png",
+    liveDemo: "https://calcstudio.taruninti.in/",
+    liveDemoLabel: "View Live Platform",
+    highlights: [
+      "🧮 65+ Specialized Calculators — Finance, health, tax, math, and everyday calculations",
+      "⚛️ Reusable Architecture — Scalable calculator and UI component library with React.js & TypeScript",
+      "⚡ Performance & SEO — Built for high-speed calculation logic and search discoverability",
+      "🎨 Intuitive Usability — Clean, responsive user workflows across all screen sizes",
+    ],
+  },
+  {
+    id: "freelance-12",
+    title: "Freelance Business Website Portfolio — 12 Industries",
+    description:
+      "Designed and developed responsive business website concepts across 12 industries, focusing on modern UI, mobile-first experiences, performance, and industry-specific user experiences.",
+    role: "Freelance Web Developer & UI/UX Designer",
+    techStack: ["React.js", "TypeScript", "Tailwind CSS", "Responsive Web Design", "UI/UX"],
+    impact:
+      "Created industry-specific layouts and user experiences across 12 diverse business sectors for freelance clients.",
+    gradient: "from-pink-500/20 to-purple-600/20",
+    highlights: [
+      "💄 Beauty & 🏛️ Architecture — Service booking flows and architectural portfolio concepts",
+      "📸 Photography & 🏗️ Construction — High-resolution media galleries & corporate showcases",
+      "💍 Wedding & 🛋️ Interior Design — Visual storytelling layouts & interactive design showcases",
+      "🍽️ Restaurant, 🦷 Dental, 🏢 Real Estate, 🏨 Hotel, 🍦 Ice Cream & 🏋️ Gym — Tailored business landing pages",
+    ],
+  },
+  {
+    id: "anitha-spices",
+    title: "Anitha Spices — Premium Business Website",
+    description:
+      "A premium business website for Anitha Spices showcasing authentic Indian spices and masalas with product details, brand information, FSSAI certifications, and direct WhatsApp ordering.",
+    role: "Designer & Full Stack Web Developer",
+    techStack: ["React.js", "TypeScript", "Tailwind CSS", "Responsive Web Design", "Vercel"],
+    impact:
+      "Designed and developed a modern, responsive product showcase and lead-generation site with direct WhatsApp order workflows.",
+    gradient: "from-amber-600/20 to-red-600/20",
+    image: "/projects/anitha-spices.png",
+    liveDemo: "https://anitha-spices.vercel.app/",
+    liveDemoLabel: "View Live Website",
+    highlights: [
+      "🌶️ Product Showcase — Clear presentation of authentic spices, powders, and masalas",
+      "💬 WhatsApp Ordering — Direct customer enquiry and order placement workflow integration",
+      "✅ Quality & FSSAI Details — Dedicated section for business credibility and certifications",
+      "📞 Lead Generation & Responsive UI — Mobile-optimized lightweight design tailored for customer inquiries",
+    ],
   },
   {
     id: "vfncc",
@@ -49,7 +154,7 @@ const projects: Project[] = [
     impact: "Increased community engagement through modern web presence",
     gradient: "from-purple-500/20 to-pink-500/20",
     liveDemo: "https://vfncc.org/",
-    image: "/vfncc.webp",
+    image: "/projects/vfncc.webp",
   },
   {
     id: "techliv",
@@ -61,7 +166,7 @@ const projects: Project[] = [
     impact: "Clean, informative presence for IoT and smart home solutions",
     gradient: "from-amber-500/20 to-orange-500/20",
     liveDemo: "https://techliv.net/",
-    image: "/techliv.webp",
+    image: "/projects/techliv.webp",
   },
   {
     id: "portfolio",
@@ -73,53 +178,7 @@ const projects: Project[] = [
     impact: "Created a stunning visual identity and seamless user experience",
     gradient: "from-primary/20 to-blue-600/20",
     liveDemo: "https://taruninti.in/",
-    image: "/portfolio1.webp",
-  },
-  {
-    id: "logistics",
-    title: "Logistics Management System",
-    description:
-      "A comprehensive logistics and fleet management solution with real-time tracking and automated dispatch.",
-    role: "Frontend Developer",
-    techStack: ["React", "Next.js", "Tailwind", "REST APIs"],
-    impact: "Improved operational efficiency and tracking capabilities",
-    gradient: "from-blue-500/20 to-blue-700/20",
-    liveDemo: "https://shipgen.net/",
-    image: "/logistics.webp",
-  },
-  {
-    id: "horilla",
-    title: "Horilla HRMS Platform",
-    description:
-      "Enterprise-grade Human Resource Management System with full employee lifecycle management and analytics.",
-    role: "Full React Frontend",
-    techStack: ["React", "TypeScript", "Node.js", "PostgreSQL"],
-    impact: "Collaborated with DevOps team on large-scale deployment",
-    gradient: "from-orange-500/20 to-red-500/20",
-  },
-  {
-    id: "sonicsync",
-    title: "SonicSync – Synchronized Audio",
-    description:
-      "A multi-device synchronized audio playback system for Android, allowing a host to broadcast music to multiple speakers in perfect sync.",
-    role: "Solo Creator & Developer",
-    techStack: ["Kotlin", "Rust", "Sync Algorithms", "Android"],
-    impact: "Achieved perfect audio synchronization with automatic drift correction",
-    gradient: "from-blue-600/20 to-indigo-600/20",
-    image: "/sonicsync1.webp",
-    github: "https://github.com/Coder-Tarun01/koyila",
-  },
-  {
-    id: "ocr",
-    title: "Tarun's OCR – Intel Scanner",
-    description:
-      "High-performance OCR application featuring advanced table detection and layout analysis by integrating a custom Rust engine with ML Kit.",
-    role: "Solo Creator & Developer",
-    techStack: ["Kotlin", "Rust", "ML Kit", "OpenCV", "Android"],
-    impact: "Restored advanced table detection and high-accuracy mode using a custom Rust engine",
-    gradient: "from-amber-600/20 to-orange-600/20",
-    image: "/Tarunsocr1.webp",
-    github: "https://github.com/Coder-Tarun01/OCR",
+    image: "/projects/portfolio1.webp",
   },
 ];
 
@@ -236,10 +295,24 @@ const PreviewPanelContent = ({
               >
                 <a href={project.liveDemo} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-3 w-3" />
-                  Live Demo
+                  {project.liveDemoLabel || "Live Demo"}
                 </a>
               </Button>
             )}
+            {project.extraLinks?.map((link) => (
+              <Button
+                key={link.url}
+                variant="outline"
+                size="sm"
+                className="h-7 flex-1 rounded-lg border-white/15 bg-white/[0.03] px-3 text-[10px] font-semibold hover:border-primary/30 hover:bg-primary/5 sm:flex-none text-foreground"
+                asChild
+              >
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-3 w-3 text-primary" />
+                  {link.label}
+                </a>
+              </Button>
+            ))}
             {project.github && (
               <Button
                 variant="outline"
@@ -253,7 +326,7 @@ const PreviewPanelContent = ({
                 </a>
               </Button>
             )}
-            {!project.liveDemo && !project.github && (
+            {!project.liveDemo && !project.github && !project.extraLinks?.length && (
               <span className="text-[10px] italic text-muted-foreground/80">Private enterprise project</span>
             )}
           </div>
@@ -365,10 +438,29 @@ const ProjectCard = ({
                 onClick={(e) => e.stopPropagation()}
               >
                 <ExternalLink className="h-3.5 w-3.5" />
-                Live Demo
+                {project.liveDemoLabel || "Live Demo"}
               </a>
             </Button>
           )}
+          {project.extraLinks?.map((link) => (
+            <Button
+              key={link.url}
+              variant="outline"
+              size="sm"
+              className="h-8 rounded-lg border-white/15 bg-white/[0.03] px-3 text-[11px] font-semibold hover:border-primary/30 hover:bg-primary/5"
+              asChild
+            >
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ExternalLink className="h-3.5 w-3.5 text-primary" />
+                {link.label}
+              </a>
+            </Button>
+          ))}
           {project.github && (
             <Button
               variant="outline"
@@ -387,7 +479,7 @@ const ProjectCard = ({
               </a>
             </Button>
           )}
-          {!project.liveDemo && !project.github && (
+          {!project.liveDemo && !project.github && !project.extraLinks?.length && (
             <span className="text-[11px] italic text-muted-foreground/80 pr-2">Private enterprise project</span>
           )}
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-muted-foreground/60 transition-all duration-300 group-hover/card:border-primary/30 group-hover/card:bg-primary/10 group-hover/card:text-primary group-hover/card:scale-110 ml-1">
@@ -557,10 +649,29 @@ const ScrollStackCard = memo(({
                     onClick={(e) => e.stopPropagation()}
                   >
                     <ExternalLink className="h-3.5 w-3.5" />
-                    Live Demo
+                    {project.liveDemoLabel || "Live Demo"}
                   </a>
                 </Button>
               )}
+              {project.extraLinks?.map((link) => (
+                <Button
+                  key={link.url}
+                  variant="outline"
+                  size="sm"
+                  className="h-8 rounded-lg border-white/15 bg-white/[0.03] px-4 text-[11px] font-semibold hover:border-primary/30 hover:bg-primary/5"
+                  asChild
+                >
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <ExternalLink className="h-3.5 w-3.5 text-primary" />
+                    {link.label}
+                  </a>
+                </Button>
+              ))}
               {project.github && (
                 <Button
                   variant="outline"
@@ -579,7 +690,7 @@ const ScrollStackCard = memo(({
                   </a>
                 </Button>
               )}
-              {!project.liveDemo && !project.github && (
+              {!project.liveDemo && !project.github && !project.extraLinks?.length && (
                 <span className="text-[11px] italic text-muted-foreground/80 pr-2">Private enterprise project</span>
               )}
             </div>
@@ -724,10 +835,29 @@ const AbsoluteStackCard = memo(({
                     onClick={(e) => e.stopPropagation()}
                   >
                     <ExternalLink className="h-3 w-3" />
-                    Live Demo
+                    {project.liveDemoLabel || "Live Demo"}
                   </a>
                 </Button>
               )}
+              {project.extraLinks?.map((link) => (
+                <Button
+                  key={link.url}
+                  variant="outline"
+                  size="sm"
+                  className="md:hidden h-7 rounded-lg border-white/15 bg-white/[0.03] px-3 text-[10px] font-semibold hover:border-primary/30 hover:bg-primary/5"
+                  asChild
+                >
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <ExternalLink className="h-3 w-3 text-primary" />
+                    {link.label}
+                  </a>
+                </Button>
+              ))}
             </div>
 
             <div>
@@ -772,10 +902,29 @@ const AbsoluteStackCard = memo(({
                   onClick={(e) => e.stopPropagation()}
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
-                  Live Demo
+                  {project.liveDemoLabel || "Live Demo"}
                 </a>
               </Button>
             )}
+            {project.extraLinks?.map((link) => (
+              <Button
+                key={link.url}
+                variant="outline"
+                size="sm"
+                className="h-8 rounded-lg border-white/15 bg-white/[0.03] px-4 text-[11px] font-semibold hover:border-primary/30 hover:bg-primary/5 text-foreground"
+                asChild
+              >
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ExternalLink className="h-3.5 w-3.5 text-primary" />
+                  {link.label}
+                </a>
+              </Button>
+            ))}
             {project.github && (
               <Button
                 variant="outline"
@@ -794,7 +943,7 @@ const AbsoluteStackCard = memo(({
                 </a>
               </Button>
             )}
-            {!project.liveDemo && !project.github && (
+            {!project.liveDemo && !project.github && !project.extraLinks?.length && (
               <span className="text-[11px] italic text-muted-foreground/80 pr-2">Private enterprise project</span>
             )}
           </div>

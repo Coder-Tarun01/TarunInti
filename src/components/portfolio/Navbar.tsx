@@ -11,8 +11,11 @@ import {
 
 const navLinks = [
   { name: "About", href: "#about" },
+  { name: "Services", href: "#services" },
+  { name: "Expertise", href: "#expertise" },
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
+  { name: "Testimonials", href: "#testimonials" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -35,41 +38,41 @@ const Navbar = () => {
         isScrolled ? "glass py-3" : "py-5"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between relative h-10 md:h-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between relative h-10 md:h-auto gap-4">
         <div className="md:hidden flex-shrink-0">
           <div className="flex items-center justify-center bg-primary/10 w-8 h-8 rounded-lg font-display font-black text-xs text-primary">
             IT
           </div>
         </div>
 
-        <div className="md:static absolute left-1/2 -translate-x-1/2 md:translate-x-0 z-10">
-          <a href="#" className="flex items-center gap-2 font-display text-[14px] min-[375px]:text-base sm:text-lg md:text-xl font-bold text-gradient group whitespace-nowrap">
-            <div className="hidden md:flex items-center justify-center bg-primary/10 w-9 h-9 rounded-lg group-hover:bg-primary/20 transition-colors flex-shrink-0 font-display font-black text-sm text-primary tracking-tighter">
+        <div className="md:static absolute left-1/2 -translate-x-1/2 md:translate-x-0 z-10 shrink-0 mr-4 lg:mr-8 xl:mr-10">
+          <a href="#" className="flex items-center gap-2 font-display text-[14px] min-[375px]:text-base sm:text-lg md:text-base lg:text-lg xl:text-xl font-bold text-gradient group whitespace-nowrap">
+            <div className="hidden md:flex items-center justify-center bg-primary/10 w-8 h-8 lg:w-9 lg:h-9 rounded-lg group-hover:bg-primary/20 transition-colors flex-shrink-0 font-display font-black text-xs lg:text-sm text-primary tracking-tighter">
               IT
             </div>
             INTI TARUN SAI KUMAR
           </a>
         </div>
 
-        <div className="flex items-center gap-2 md:gap-8">
-          <div className="hidden md:flex items-center gap-8">
+        <div className="flex items-center gap-3 lg:gap-6 xl:gap-8">
+          <div className="hidden md:flex items-center gap-3.5 lg:gap-5 xl:gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors font-medium relative group"
+                className="text-xs lg:text-sm text-muted-foreground hover:text-foreground transition-colors font-medium relative group whitespace-nowrap"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
-            <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="hidden sm:flex border-primary/20 hover:bg-primary/5" asChild>
+            <div className="flex items-center gap-2 lg:gap-3 ml-2 lg:ml-4">
+              <Button variant="outline" size="sm" className="hidden sm:flex border-primary/20 hover:bg-primary/5 text-xs lg:text-sm px-3 lg:px-4" asChild>
                 <a href="/Tarun_inti.pdf" target="_blank" rel="noopener noreferrer">
                   Resume
                 </a>
               </Button>
-              <Button variant="hero" size="default" asChild>
+              <Button variant="hero" size="sm" className="text-xs lg:text-sm px-3 lg:px-4" asChild>
                 <a href="#contact">Hire Me</a>
               </Button>
             </div>
