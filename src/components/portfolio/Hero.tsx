@@ -145,22 +145,22 @@ const Hero = () => {
               className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 lg:mb-8 ${fadeUp("0.1s")}`}
             >
               <span className="text-[10px] sm:text-xs font-bold text-foreground/80 tracking-tight">
-                8+ Real-World Projects • <span className="text-primary">Available for Hire</span>
+                Tarun Inti • <span className="text-primary">Full Stack &amp; Freelance Web Developer</span>
               </span>
             </div>
 
             <h1
               className={`text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight mb-6 leading-[1.1] ${fadeUp("0.2s")}`}
             >
-              Full-Stack Developer <br className="hidden sm:block" />
-              Building Scalable, <br className="hidden sm:block" />
+              Full-Stack &amp; Freelance <br className="hidden sm:block" />
+              Web Developer <br className="hidden sm:block" />
               <span className="text-gradient">Production-Ready</span> Web Apps
             </h1>
 
             <p
               className={`text-base sm:text-lg text-muted-foreground mb-4 font-medium max-w-lg mx-auto lg:mx-0 ${fadeUp("0.3s")}`}
             >
-              Contributed to production-grade applications and built 8+ real-world projects using React, Next.js, and Node.js.
+              Building scalable, high-performance web applications and AI-integrated products using React, Node.js, FastAPI, and MERN stack technologies.
             </p>
 
             <div

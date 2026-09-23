@@ -107,8 +107,7 @@ const Contact = () => {
             Let's Build Something <span className="text-gradient">Amazing</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Ready to transform your ideas into reality? Drop me a message and let's discuss
-            how I can help bring your project to life.
+            Ready to transform your ideas into reality? Whether you need a freelance web developer for hire, a React &amp; Node.js developer for your startup, or AI automation integration, drop me a message and let's discuss your project.
           </p>
         </motion.div>
 

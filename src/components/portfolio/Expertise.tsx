@@ -32,7 +32,7 @@ const expertiseList: ExpertiseItem[] = [
     categoryTag: "End-to-End Applications",
     description:
       "Building end-to-end web applications across frontend interfaces, backend services, APIs, databases, and practical business workflows.",
-    techTags: ["React.js", "TypeScript", "FastAPI", "Python", "PostgreSQL", "MySQL", "REST APIs", "Redis"],
+    techTags: ["React.js", "Node.js", "MERN Stack", "FastAPI", "Python", "TypeScript", "PostgreSQL", "MongoDB", "REST APIs"],
     keyPractices: [
       "Decoupled frontend & API backend architecture",
       "Normalized database schema design & indexing",

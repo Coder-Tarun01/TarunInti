@@ -57,20 +57,14 @@ const About = () => {
             className="space-y-6"
           >
             <motion.p variants={itemVariants} className="text-muted-foreground text-lg leading-relaxed">
-              I'm a <span className="text-foreground font-semibold">Full-Stack Developer</span> with
-              over 7 months of intensive hands-on experience, rapidly growing from Junior to Full-time
-              developer. I specialize in building bold, interactive web experiences that not only look
-              stunning but also drive real business results.
+              I'm <span className="text-foreground font-semibold">Tarun Inti</span> (<span className="text-foreground font-semibold">INTI Tarun Sai Kumar</span>), a <span className="text-foreground font-semibold">Full-Stack &amp; Freelance Web Developer</span> based in Visakhapatnam, India. With intensive hands-on experience, I specialize in building scalable web applications and AI-integrated products that drive real business impact.
             </motion.p>
             <motion.p variants={itemVariants} className="text-muted-foreground text-lg leading-relaxed">
-              My expertise spans the entire development stack—from crafting pixel-perfect UIs with
-              <span className="text-primary"> React, Next.js, and Tailwind</span> to building robust
-              backends with <span className="text-primary">Node.js, Express, and various databases</span>.
-              I've collaborated with DevOps teams on large-scale projects and maintained complex codebases.
+              My expertise spans the complete development stack—from building responsive UIs with
+              <span className="text-primary"> React, Next.js, and Tailwind CSS</span> to engineering robust REST APIs and backends using <span className="text-primary">Node.js, Express, FastAPI, and Python</span> alongside databases (MongoDB, PostgreSQL, MySQL).
             </motion.p>
             <motion.p variants={itemVariants} className="text-muted-foreground text-lg leading-relaxed">
-              Beyond my core skills, I leverage AI to tackle any challenge—there's no problem I can't
-              solve. When you work with me, you get a developer who's committed to your success.
+              Beyond traditional MERN stack development, I specialize in <span className="text-primary">AI automation &amp; n8n workflow integration</span> to build intelligent web applications. Whether you need a freelance developer for hire or a full-stack partner for your startup, I bring end-to-end commitment to your build.
             </motion.p>
           </motion.div>
 
